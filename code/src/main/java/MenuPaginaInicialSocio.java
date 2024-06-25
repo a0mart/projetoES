@@ -75,7 +75,7 @@ public class MenuPaginaInicialSocio extends JFrame{
     }
 
     public void errorInvalidTableIndex() {
-        JOptionPane.showMessageDialog(null, "Tem de selecionar uma opcao em cada tabela!");
+        JOptionPane.showMessageDialog(null, "Tem de selecionar uma opcao da tabela!");
     }
 
     public void close(int stock) {

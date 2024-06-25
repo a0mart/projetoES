@@ -35,6 +35,8 @@ public class MenuPrincipal extends JFrame{
     }
 
     private void gestaoDeEmprestimosButtonActionPerformed(ActionEvent actionEvent){
+        setVisible(false);
+        dispose();
         MenuGestaoEmprestimo menuGestaoEmprestimos = new MenuGestaoEmprestimo("Menu Gestão de Emprestimos");
         menuGestaoEmprestimos.setVisible(true);
     }

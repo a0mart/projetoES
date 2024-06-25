@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class MenuDetalhesLivro extends JFrame{
     private JPanel menuDetalhesLivro;
@@ -48,5 +49,13 @@ public class MenuDetalhesLivro extends JFrame{
         setMinimumSize(new Dimension(900, 600));
         pack();
 
+        paginaInicialButton.addActionListener(this::paginaIncialButtonButtonActionPerformed);
+    }
+
+    public void paginaIncialButtonButtonActionPerformed(ActionEvent e){
+        setVisible(false);
+        dispose();
+        MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");
+        menuPrincipal.setVisible(true);
     }
 }

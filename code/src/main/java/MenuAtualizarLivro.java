@@ -6,10 +6,10 @@ import java.awt.event.ActionEvent;
 public class MenuAtualizarLivro extends JFrame{
     private JButton gestaoDeSociosButton;
     private JButton gestaoDeMultasButton;
-    private JButton gestaoDeReservasButton;
+    private JButton gestaoDeEmprestimosButton;
     private JButton gestaoDeLivrosButton;
     private JButton gestaoDeRequisitosButton;
-    private JButton button6;
+    private JButton atualizarLivroButton;
     private JButton paginaInicialButton;
     private JTable table1;
     private JPanel menuAtualizarLivro;
@@ -49,6 +49,9 @@ public class MenuAtualizarLivro extends JFrame{
         pack();
 
         atualizarButton.addActionListener(this::atualizarButtonActionPerformed);
+        paginaInicialButton.addActionListener(this::paginaIncialButtonButtonActionPerformed);
+        gestaoDeLivrosButton.addActionListener(this::gestaoDeLivrosButtonActionPerformed);
+        gestaoDeEmprestimosButton.addActionListener(this::gestaoDeEmprestimosButtonActionPerformed);
     }
 
     public void atualizarButtonActionPerformed(ActionEvent e){
@@ -74,5 +77,25 @@ public class MenuAtualizarLivro extends JFrame{
         dispose();
         SubMenuAtualizarLivro subMenu_atualizar_livro = new SubMenuAtualizarLivro("SubMenu Atualizar livro", stock-1);
         subMenu_atualizar_livro.setVisible(true);
+    }
+
+    public void paginaIncialButtonButtonActionPerformed(ActionEvent e){
+        setVisible(false);
+        dispose();
+        MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");
+        menuPrincipal.setVisible(true);
+    }
+
+    private void gestaoDeLivrosButtonActionPerformed(ActionEvent actionEvent){
+        dispose();
+        MenuGestaoLivros menuGestaoLivros = new MenuGestaoLivros("Menu Gestão de Livros");
+        menuGestaoLivros.setVisible(true);
+    }
+
+    private void gestaoDeEmprestimosButtonActionPerformed(ActionEvent actionEvent){
+        setVisible(false);
+        dispose();
+        MenuGestaoEmprestimo menuGestaoEmprestimos = new MenuGestaoEmprestimo("Menu Gestão de Emprestimos");
+        menuGestaoEmprestimos.setVisible(true);
     }
 }

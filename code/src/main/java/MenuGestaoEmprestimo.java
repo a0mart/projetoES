@@ -29,14 +29,17 @@ public class MenuGestaoEmprestimo extends JFrame{
 
         String[][] dataEmprestimos = new String[gestorBaseDados.getEmprestimos().size()][5];
         for (int i = 0; i < gestorBaseDados.getEmprestimos().size(); i++){
-            int id = gestorBaseDados.getEmprestimos().get(i).getIdEmprestimo();
-            String livro = gestorBaseDados.getEmprestimos().get(i).getNomeLivro();
-            String socio = gestorBaseDados.getEmprestimos().get(i).getNomeSocio();
-            LocalDate dataEmprestimo = gestorBaseDados.getEmprestimos().get(i).getDataEmprestimo();
-            EstadoEmprestimo estadoEmprestimo = gestorBaseDados.getEmprestimos().get(i).getEstadoEmprestimo();
-            LocalDate dataEntrega = gestorBaseDados.getEmprestimos().get(i).getDataDevolucao();
-            dataEmprestimos[i] = new String[]{String.valueOf(id), livro, socio, String.valueOf(dataEmprestimo), String.valueOf(estadoEmprestimo), String.valueOf(dataEntrega)};
-        }
+            if (gestorBaseDados.getEmprestimos().get(i).getEstadoEmprestimo() == EstadoEmprestimo.Aberto || gestorBaseDados.getEmprestimos().get(i).getEstadoEmprestimo() == EstadoEmprestimo.EmAtraso){
+                int id = gestorBaseDados.getEmprestimos().get(i).getIdEmprestimo();
+                String livro = gestorBaseDados.getEmprestimos().get(i).getNomeLivro();
+                String socio = gestorBaseDados.getEmprestimos().get(i).getNomeSocio();
+                LocalDate dataEmprestimo = gestorBaseDados.getEmprestimos().get(i).getDataEmprestimo();
+                EstadoEmprestimo estadoEmprestimo = gestorBaseDados.getEmprestimos().get(i).getEstadoEmprestimo();
+                LocalDate dataEntrega = gestorBaseDados.getEmprestimos().get(i).getDataDevolucao();
+                dataEmprestimos[i] = new String[]{String.valueOf(id), livro, socio, String.valueOf(dataEmprestimo), String.valueOf(estadoEmprestimo), String.valueOf(dataEntrega)};
+
+            }
+}
         table1.setModel(new DefaultTableModel(
                 dataEmprestimos,
                 new String[]{ "ID", "Titulo", "Nome", "Data do Emprestimo", "Estado so Emprestimo", "Data de Entrega"}
@@ -47,6 +50,8 @@ public class MenuGestaoEmprestimo extends JFrame{
 
         fazerEmprestimoButton.addActionListener(this::fazerEmprestimoButtonActionPerformed);
         fazerDevolucaoButton.addActionListener(this::fazerDevolucaoButtonActionPerformed);
+        paginaIncialButton.addActionListener(this::paginaIncialButtonButtonActionPerformed);
+        gestaoDeLivrosButton.addActionListener(this::gestaoDeLivrosButtonActionPerformed);
     }
 
 
@@ -62,6 +67,19 @@ public class MenuGestaoEmprestimo extends JFrame{
         dispose();
         MenuFazerDevolucao menuFazerDevolucao = new MenuFazerDevolucao("Menu Fazer Devolucao");
         menuFazerDevolucao.setVisible(true);
+    }
+
+    public void paginaIncialButtonButtonActionPerformed(ActionEvent e){
+        setVisible(false);
+        dispose();
+        MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");
+        menuPrincipal.setVisible(true);
+    }
+
+    private void gestaoDeLivrosButtonActionPerformed(ActionEvent actionEvent){
+        dispose();
+        MenuGestaoLivros menuGestaoLivros = new MenuGestaoLivros("Menu Gestão de Livros");
+        menuGestaoLivros.setVisible(true);
     }
 }
 
