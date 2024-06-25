@@ -5,7 +5,6 @@ import java.util.Iterator;
 
 public class MenuGestaoLivros extends JFrame{
     private JButton gestãoDeReservasButton;
-    private JButton gestãoDeLivrosButton;
     private JButton gestãoDeFornecedoresButton;
     private JButton gestãoDeEmprestimosButton;
     private JButton gestãoDeMultasButton;
@@ -16,6 +15,7 @@ public class MenuGestaoLivros extends JFrame{
     private JButton button1;
     private JPanel painelLivros;
     private JPanel menuGestaoLivros;
+    private JButton gestãoDeLivrosButton;
 
     private BotaoLivro[][] botoes;
 
@@ -57,6 +57,7 @@ public class MenuGestaoLivros extends JFrame{
         /** Listeners */
         páginaInicialButton.addActionListener(this::btnpáginaInicialActionPerformed);
         gestãoDeFornecedoresButton.addActionListener(this::btnFornecedoresActionPerformed);
+        gestãoDeEmprestimosButton.addActionListener(this::btngestãoDeEmprestimosActionPerformed);
 
     }
     public void btnFornecedoresActionPerformed(ActionEvent e) {
@@ -65,9 +66,17 @@ public class MenuGestaoLivros extends JFrame{
         menuGestaoFornecedores.setVisible(true);
     }
 
+    public void btngestãoDeEmprestimosActionPerformed(ActionEvent e) {
+        dispose();
+        MenuGestaoEmprestimo menuGestaoEmprestimos = new MenuGestaoEmprestimo("Menu Gestão de Emprestimos");
+        menuGestaoEmprestimos.setVisible(true);
+    }
+
 
     public void btnpáginaInicialActionPerformed(ActionEvent e) {
         dispose();
+        MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");
+        menuPrincipal.setVisible(true);
     }
 
     public void btnLivroActionPerformed(ActionEvent e) {
