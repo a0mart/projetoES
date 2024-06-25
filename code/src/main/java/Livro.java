@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Livro extends DetalhesLivro{
+    private static int livros = 0;
+    private int id;
     private int codigo;
     private EstadoLivro estadoLivro;
 
@@ -9,11 +11,15 @@ public class Livro extends DetalhesLivro{
 
     public Livro(String titulo, String autor, Genero genero, SubGenero subGenero, int numearoEdicao, int isbn, int ano) {
         super(titulo, autor, genero, subGenero, numearoEdicao, isbn, ano);
+        this.id = ++livros;
         this.codigo = 0;
-        this.estadoLivro = null;
+        this.estadoLivro = EstadoLivro.Disponivel;
         emprestimos = new ArrayList<>();
     }
 
+    public int getId() {
+        return id;
+    }
 
     public int getCodigo() {
         return codigo;
@@ -37,4 +43,5 @@ public class Livro extends DetalhesLivro{
         }
         emprestimos.add(emprestimo);
     }
+
 }

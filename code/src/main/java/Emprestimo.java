@@ -1,22 +1,24 @@
+
+import java.time.LocalDate;
 import java.util.Date;
 
+
 public class Emprestimo {
-    private int idEmprestimo = 1;
+    private static int emprestimos = 0;
+    private int idEmprestimo;
     private Livro livroEmprestado;
     private Socio socio;
     private EstadoEmprestimo estadoEmprestimo;
-    private Date dataEmprestimo;
-    private Date dataDevolucao;
-    private int tempoEmprestimo;
+    private LocalDate dataEmprestimo;
+    private LocalDate dataDevolucao;
 
-    public Emprestimo(Livro livroEmprestado, Socio socio, Date dataEmprestimo, int tempoEmprestimo) {
-        this.idEmprestimo++;
-        this.livroEmprestado = livroEmprestado;
+    public Emprestimo(Livro livro, Socio socio) {
+        this.idEmprestimo = ++emprestimos;
+        this.livroEmprestado = livro;
         this.socio = socio;
-        this.dataEmprestimo = dataEmprestimo;
-        this.tempoEmprestimo = tempoEmprestimo;
+        this.dataEmprestimo = setDataEmprestimo();
+        this.dataDevolucao = setDataDevolucao(dataEmprestimo);
         this.estadoEmprestimo = EstadoEmprestimo.Aberto;
-        //this.dataDevolucao = setDataDevolucao(new Date());
     }
 
     public int getIdEmprestimo() {
@@ -27,24 +29,49 @@ public class Emprestimo {
         return livroEmprestado;
     }
 
+    public String getNomeLivro(){
+        return livroEmprestado.getTitulo();
+    }
+
     public Socio getSocio() {
         return socio;
     }
 
-    public Date getDataEmprestimo() {
+    public String getNomeSocio(){
+        return socio.getNome();
+    }
+    public LocalDate getDataEmprestimo() {
         return dataEmprestimo;
     }
-
-    public Date getDataDevolucao() {
+    public LocalDate getDataDevolucao() {
         return dataDevolucao;
+    }
+
+    public EstadoEmprestimo getEstadoEmprestimo() {
+        LocalDate currentDate = LocalDate.now();
+        if (currentDate.isAfter(dataDevolucao)){
+            setEstadoEmprestimo(EstadoEmprestimo.EmAtraso);
+        }
+        return estadoEmprestimo;
     }
 
     public void setEstadoEmprestimo(EstadoEmprestimo estadoEmprestimo) {
         this.estadoEmprestimo = estadoEmprestimo;
     }
 
-    /*
-    public void setDataDevolucao(Date dataDevolucao) {
-        return dataDevolucao;
-    }*/
+    public LocalDate setDataEmprestimo(){
+        LocalDate currentDate = LocalDate.now();
+        return currentDate;
+    }
+
+    public LocalDate setDataDevolucao(LocalDate dataeamprestimo){
+        LocalDate futureDate = dataeamprestimo.plusDays(5);
+        return futureDate;
+    }
+
+    //setDataDevolucaoTeste, implementação para fazer teste unitário de empréstimo em atraso
+    public void setDataDevolucaoTeste(LocalDate dataeamprestimo){
+        LocalDate futureDate = dataeamprestimo.minusDays(5);
+        dataDevolucao = futureDate;
+    }
 }

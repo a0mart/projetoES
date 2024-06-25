@@ -1,5 +1,6 @@
 public enum EstadoLivro {
     Disponivel,
     Indisponivel,
-    Reservado
+    Reservado,
+    Devolvido
 }
