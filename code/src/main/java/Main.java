@@ -3,8 +3,10 @@ public class Main {
         GestorBaseDados gestorBaseDados = GestorBaseDados.getGestorBaseDados();
 
         Socio socio3 = new Socio("Manel", 123, "Casa", 345, "Jaaa@");
-        Fornecedor fornecedor1 = new Fornecedor("luis", 456, "lisboa", 933333333, "email@teste.pt");
+        Fornecedor fornecedor1 = new Fornecedor("Porto Editora", 456, "Porto, rua bla bla bla nº87", 933333333, "emailluis@teste.pt",TipoFornecedor.EditoraIndependente);
+        Fornecedor fornecedor2 = new Fornecedor("Lisboa Editora Distribuição", 789, "Lisboa, rua bla bla bla nº14", 922222222, "emailjoao@teste.pt",TipoFornecedor.DistribuidorNacional);
         gestorBaseDados.addFornecedor(fornecedor1);
+        gestorBaseDados.addFornecedor(fornecedor2);
         gestorBaseDados.addSocio(socio3);
         gestorBaseDados.criarStockeLivros("Cinderela", "Joaquim", Genero.tecnico, SubGenero.informatica, 213, 345, 1222, 3);
         gestorBaseDados.criarStockeLivros("O autocarro", "Luis", Genero.ficcao, SubGenero.terror, 333, 476, 2024, 2);

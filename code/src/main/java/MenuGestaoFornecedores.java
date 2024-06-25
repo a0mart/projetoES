@@ -13,7 +13,7 @@ public class MenuGestaoFornecedores extends JFrame{
     private JButton gestãoDeMultasButton;
     private JButton gestãoDeSóciosButton;
     private JPanel painelLivros;
-    private JButton fazerEncomendaButton;
+    private JButton adicionarFornecedorButton;
     private JTextField procurarPorFornecedorTextField;
     private JButton button1;
     private GestorBaseDados gestorBaseDados;
@@ -61,7 +61,6 @@ public class MenuGestaoFornecedores extends JFrame{
     }
 
     public void btngestãoDeEmprestimosActionPerformed(ActionEvent e) {
-        dispose();
         MenuGestaoEmprestimo menuGestaoEmprestimos = new MenuGestaoEmprestimo("Menu Gestão de Emprestimos");
         menuGestaoEmprestimos.setVisible(true);
     }

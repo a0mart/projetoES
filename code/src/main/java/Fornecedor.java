@@ -5,17 +5,23 @@ public class Fornecedor extends Contacto{
     private static int fornecedores = 0;
     private int id;
     private EstadoContaFornecedor estadoContaFornecedor;
+    private TipoFornecedor tipoFornecedor;
     private List<Livro> livrosDisponiveis;
 
-    public Fornecedor(String nome, int nif, String morada, int telefone, String email) {
+    public Fornecedor(String nome, int nif, String morada, int telefone, String email,TipoFornecedor tipoFornecedor) {
         super(nome, nif, morada, telefone, email);
         this.id = ++fornecedores;
         this.estadoContaFornecedor = EstadoContaFornecedor.Ativa;
+        this.tipoFornecedor = tipoFornecedor;
         this.livrosDisponiveis = new ArrayList<>();
     }
 
     public int getId() {
         return id;
+    }
+
+    public TipoFornecedor getTipoFornecedor() {
+        return tipoFornecedor;
     }
 
     public EstadoContaFornecedor getEstadoContaFornecedor() {

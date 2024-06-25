@@ -67,7 +67,6 @@ public class MenuGestaoLivros extends JFrame{
     }
 
     public void btngestãoDeEmprestimosActionPerformed(ActionEvent e) {
-        dispose();
         MenuGestaoEmprestimo menuGestaoEmprestimos = new MenuGestaoEmprestimo("Menu Gestão de Emprestimos");
         menuGestaoEmprestimos.setVisible(true);
     }
