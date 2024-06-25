@@ -7,8 +7,8 @@ public class GestorBaseDados {
     private ArrayList<Socio> socios;
     private ArrayList<Emprestimo> emprestimos;
     private ArrayList<Stock> stocks;
-
     private List<Multa> multas;
+    private List<Fornecedor> fornecedores;
 
     private static GestorBaseDados instancia = new GestorBaseDados();
 
@@ -21,6 +21,11 @@ public class GestorBaseDados {
         socios = new ArrayList<>();
         emprestimos = new ArrayList<>();
         stocks = new ArrayList<>();
+        fornecedores = new ArrayList<>();
+    }
+
+    public List<Fornecedor> getFornecedores() {
+        return fornecedores;
     }
 
     public ArrayList<Livro> getLivros() {
@@ -42,6 +47,8 @@ public class GestorBaseDados {
     public List<Multa> getMultas(){
         return multas;
     }
+
+    public void addFornecedor(Fornecedor fornecedor){ fornecedores.add(fornecedor);}
 
     public void addLivro (Livro livro){
         livros.add(livro);
