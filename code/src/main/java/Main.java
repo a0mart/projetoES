@@ -5,6 +5,8 @@ public class Main {
         Socio socio3 = new Socio("Manel", 123, "Casa", 345, "Jaaa@");
         Fornecedor fornecedor1 = new Fornecedor("Porto Editora", 456, "Porto, rua bla bla bla nº87", 933333333, "emailluis@teste.pt",TipoFornecedor.EditoraIndependente);
         Fornecedor fornecedor2 = new Fornecedor("Lisboa Editora Distribuição", 789, "Lisboa, rua bla bla bla nº14", 922222222, "emailjoao@teste.pt",TipoFornecedor.DistribuidorNacional);
+        fornecedor1.setLivrosDisponiveis(gestorBaseDados.getLivros());
+        fornecedor2.setLivrosDisponiveis(gestorBaseDados.getLivros());
         gestorBaseDados.addFornecedor(fornecedor1);
         gestorBaseDados.addFornecedor(fornecedor2);
         gestorBaseDados.addSocio(socio3);

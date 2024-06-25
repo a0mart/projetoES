@@ -20,6 +20,7 @@ public class MenuDetalhesFornecedor extends JFrame{
     private JLabel emailLabel;
     private JLabel teleLabel;
     private JLabel estadoLabel;
+    private JButton verButton;
 
     public MenuDetalhesFornecedor(String title,int id) throws HeadlessException {
         super(title);
