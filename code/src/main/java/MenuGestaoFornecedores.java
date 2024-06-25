@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.util.Iterator;
 
 public class MenuGestaoFornecedores extends JFrame{
-    private JPanel menuGestaoLivros;
+    private JPanel menuGestaoFornecedores;
     private JButton páginaInicialButton;
     private JButton gestãoDeReservasButton;
     private JButton gestãoDeLivrosButton;
@@ -49,7 +49,7 @@ public class MenuGestaoFornecedores extends JFrame{
             }
         }
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setContentPane(menuGestaoLivros);
+        setContentPane(menuGestaoFornecedores);
         setMinimumSize(new Dimension(900, 600));
         pack();
 
@@ -57,6 +57,7 @@ public class MenuGestaoFornecedores extends JFrame{
         páginaInicialButton.addActionListener(this::btnpáginaInicialActionPerformed);
         gestãoDeLivrosButton.addActionListener(this::btngestãoDeLivrosActionPerformed);
         gestãoDeEmprestimosButton.addActionListener(this::btngestãoDeEmprestimosActionPerformed);
+
     }
 
     public void btngestãoDeEmprestimosActionPerformed(ActionEvent e) {
@@ -85,5 +86,7 @@ public class MenuGestaoFornecedores extends JFrame{
                 id = s.getId();
             }
         }
+        MenuDetalhesFornecedor menuDetalhesFornecedor = new MenuDetalhesFornecedor("Menu Destalhes do fornecedor",id-1);
+        menuDetalhesFornecedor.setVisible(true);
     }
 }
