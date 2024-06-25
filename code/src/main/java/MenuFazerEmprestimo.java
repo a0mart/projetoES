@@ -66,9 +66,6 @@ public class MenuFazerEmprestimo extends JFrame{
                 new String[]{"Titulo", "Autor", "Genero", "Sub Genero", "NºEdicao", "ISBN", "Ano", "ID"}
         ));
 
-
-
-        setLocationRelativeTo(null);
         setMinimumSize(new Dimension(900, 600));
         pack();
 

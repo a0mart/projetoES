@@ -42,8 +42,6 @@ public class MenuGestaoEmprestimo extends JFrame{
                 new String[]{ "ID", "Titulo", "Nome", "Data do Emprestimo", "Estado so Emprestimo", "Data de Entrega"}
         ));
 
-
-        setLocationRelativeTo(null);
         setMinimumSize(new Dimension(900, 600));
         pack();
 

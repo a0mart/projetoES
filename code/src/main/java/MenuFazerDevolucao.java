@@ -68,7 +68,7 @@ public class MenuFazerDevolucao extends JFrame{
                 gestorBaseDados.getEmprestimos().get(i).getLivroEmprestado().setEstadoLivro(EstadoLivro.Devolvido);
             }
         }
-
+        JOptionPane.showMessageDialog(null, "Emprestimo Fechado com sucesso!");
         setVisible(false);
         dispose();
         MenuGestaoEmprestimo menuGestaoEmprestimo = new MenuGestaoEmprestimo("Menu Gestao Emprestimos");

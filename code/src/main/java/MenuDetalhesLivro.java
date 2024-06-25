@@ -41,7 +41,7 @@ public class MenuDetalhesLivro extends JFrame{
         labelSubGenero.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getSubGenero()));
         //labelEditora.setText(stock.getEditora);
         labelEdicao.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getNumeroEdicao()));
-        labelEdicao.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getAno()));
+        labelano.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getAno()));
         labelISBN.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getIsbn()));
         labelStock.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getQuantidadeLivrosDisponivel()));
 
