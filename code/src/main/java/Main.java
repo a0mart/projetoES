@@ -20,7 +20,7 @@ public class Main {
 
         new LoginForm("Login").setVisible(true);
         //new MenuPrincipal("Menu Principal").setVisible(true);
-        new MenuPaginaInicialSocio("Menu Principal").setVisible(true);
+        //new MenuPaginaInicialSocio("Menu Principal").setVisible(true);
     }
 }
 
