@@ -16,6 +16,7 @@ public class MenuGestaoLivros extends JFrame{
     private JPanel painelLivros;
     private JPanel menuGestaoLivros;
     private JButton gestãoDeLivrosButton;
+    private JButton atualizarEstadoDeLivroButton;
 
     private BotaoLivro[][] botoes;
 
@@ -59,6 +60,7 @@ public class MenuGestaoLivros extends JFrame{
         páginaInicialButton.addActionListener(this::btnpáginaInicialActionPerformed);
         gestãoDeFornecedoresButton.addActionListener(this::btnFornecedoresActionPerformed);
         gestãoDeEmprestimosButton.addActionListener(this::btngestãoDeEmprestimosActionPerformed);
+        atualizarEstadoDeLivroButton.addActionListener(this::atualizarEstadoDeLivroButtonActionPerformed);
 
     }
     public void btnFornecedoresActionPerformed(ActionEvent e) {
@@ -87,7 +89,13 @@ public class MenuGestaoLivros extends JFrame{
                 id = s.getId();
             }
         }
-        MenuDetalhesLivro menuDetalhesLivro = new MenuDetalhesLivro("Menu Destalhes do livro",id-1);
+        MenuDetalhesLivro menuDetalhesLivro = new MenuDetalhesLivro("Menu Destalhes do livro",id-1, 1);
         menuDetalhesLivro.setVisible(true);
+    }
+
+    public void atualizarEstadoDeLivroButtonActionPerformed(ActionEvent e){
+        dispose();
+        MenuAtualizarLivro menuAtualizarLivro = new MenuAtualizarLivro("Menu Atualizar livro");
+        menuAtualizarLivro.setVisible(true);
     }
 }

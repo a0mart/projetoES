@@ -10,8 +10,8 @@ public class MenuPrincipal extends JFrame{
     private JButton gestaoDeEmprestimosButton;
     private JButton gestaoDeLivrosButton;
     private JButton gestaoDeRequisitosButton;
-    private JButton paginaInicialButton;
     private JPanel menuPrincipal;
+    private JButton paginaInicialButton1;
 
     private GestorBaseDados gestorBaseDados;
 
@@ -43,6 +43,7 @@ public class MenuPrincipal extends JFrame{
     }
 
     private void gestaoDeEmprestimosButtonActionPerformed(ActionEvent actionEvent){
+        dispose();
         MenuGestaoEmprestimo menuGestaoEmprestimos = new MenuGestaoEmprestimo("Menu Gestão de Emprestimos");
         menuGestaoEmprestimos.setVisible(true);
     }

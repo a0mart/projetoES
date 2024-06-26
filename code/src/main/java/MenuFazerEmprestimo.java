@@ -1,7 +1,10 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.Iterator;
 
 public class MenuFazerEmprestimo extends JFrame{
     private JPanel menuFazerEmprestimo;
@@ -9,7 +12,6 @@ public class MenuFazerEmprestimo extends JFrame{
     private JButton gestaoDeSociosButton;
     private JButton gestaoDeMultasButton;
     private JButton fazerDevolucaoButton;
-    private JButton fazerEmprestimoButton;
     private JButton gestaoDeLivrosButton;
     private JButton gestaoDeRequisitosButton;
     private JButton gestaoDeEmprestimosButton;
@@ -17,66 +19,92 @@ public class MenuFazerEmprestimo extends JFrame{
     private JTable tabelaLivros;
     private JButton confirmarButton;
     private JButton adicionarSocioButton;
+    private JButton fazerEmprestimoButton1;
+    private JTextField searchSocio;
+    private JTextField searchLivro;
+    private JTextField textField1;
 
     private GestorBaseDados gestorBaseDados;
 
 
     public MenuFazerEmprestimo(String title){
         super(title);
-
+        gestorBaseDados = GestorBaseDados.getGestorBaseDados();
         setContentPane(menuFazerEmprestimo);
 
-        gestorBaseDados = GestorBaseDados.getGestorBaseDados();
+        Iterator<Socio> socioIterator = gestorBaseDados.getSocios().iterator();
+        Iterator<Livro> livoIterator = gestorBaseDados.getLivros().iterator();
 
-        String[][] dataSocios = new String[gestorBaseDados.getSocios().size()][5];
-        for (int i = 0; i < gestorBaseDados.getSocios().size(); i++){
+        String[] colunas = { "Nome", "NIF", "Morada", "Telefone", "Email", "ID"};
+        DefaultTableModel model = new DefaultTableModel(colunas, 0);
 
-            String nome = gestorBaseDados.getSocios().get(i).getNome();
-            int nif = gestorBaseDados.getSocios().get(i).getNif();
-            String morada = gestorBaseDados.getSocios().get(i).getMorada();
-            int telefone = gestorBaseDados.getSocios().get(i).getTelefone();
-            String email = gestorBaseDados.getSocios().get(i).getEmail();
-            int id = gestorBaseDados.getSocios().get(i).getId();
+        while (socioIterator.hasNext()) {
+            Socio socio = socioIterator.next();
+            String nome = socio.getNome();
+            int nif = socio.getNif();
+            String morada = socio.getMorada();
+            int telefone = socio.getTelefone();
+            String email = socio.getEmail();
+            int id = socio.getId();
 
-
-            dataSocios[i] = new String[]{nome, String.valueOf(nif), morada, String.valueOf(telefone), email, String.valueOf(id)};
+            Object[] row = {nome, nif, morada, telefone, email, id};
+            model.addRow(row);
         }
-        tabelaSocios.setModel(new DefaultTableModel(
-                dataSocios,
-                new String[]{ "Nome", "NIF", "Morada", "Telefone", "Email", "ID"}
-        ));
+        tabelaSocios.setModel(model);
 
-        String[][] dataLivros = new String[gestorBaseDados.getLivros().size()][7];
-        for (int i = 0; i < gestorBaseDados.getLivros().size(); i++){
-            if (gestorBaseDados.getLivros().get(i).getEstadoLivro() == EstadoLivro.Disponivel){
-                int id = gestorBaseDados.getLivros().get(i).getId();
-                String titulo = gestorBaseDados.getLivros().get(i).getTitulo();
-                String autor = gestorBaseDados.getLivros().get(i).getAutor();
-                Genero genero = gestorBaseDados.getLivros().get(i).getGenero();
-                SubGenero subGenero = gestorBaseDados.getLivros().get(i).getSubGenero();
-                int numeroEdicao = gestorBaseDados.getLivros().get(i).getNumeroEdicao();
-                int isbn = gestorBaseDados.getLivros().get(i).getIsbn();
-                int ano = gestorBaseDados.getLivros().get(i).getAno();
+        String[] colunasL = {"ID", "Titulo", "Autor", "Genero", "Sub Genero", "NºEdicao", "ISBN", "Ano", "Código"};
+        DefaultTableModel modelo = new DefaultTableModel(colunasL, 0);
 
-                dataLivros[i] = new String[]{titulo, autor, String.valueOf(genero), String.valueOf(subGenero), String.valueOf(numeroEdicao), String.valueOf(isbn), String.valueOf(ano), String.valueOf(id)};
+        while (livoIterator.hasNext()){
+            Livro livro = livoIterator.next();
+            if (livro.getEstadoLivro() == EstadoLivro.Disponivel) {
+                int id = livro.getId();
+                String titulo = livro.getTitulo();
+                String autor = livro.getAutor();
+                Genero genero = livro.getGenero();
+                SubGenero subGenero = livro.getSubGenero();
+                int numeroEdicao = livro.getNumeroEdicao();
+                int isbn = livro.getIsbn();
+                int ano = livro.getAno();
+                int codigo = livro.getCodigo();
+
+                Object[] row = {id, titulo, autor, genero, subGenero, numeroEdicao, isbn, ano, codigo};
+                modelo.addRow(row);
             }
         }
-        tabelaLivros.setModel(new DefaultTableModel(
-                dataLivros,
-                new String[]{"Titulo", "Autor", "Genero", "Sub Genero", "NºEdicao", "ISBN", "Ano", "ID"}
-        ));
+        tabelaLivros.setModel(modelo);
 
-
-
-        setLocationRelativeTo(null);
-        setMinimumSize(new Dimension(900, 600));
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
 
         confirmarButton.addActionListener(this::confirmarButtonActionPerformed);
+        paginaInicialButton.addActionListener(this::paginaIncialButtonButtonActionPerformed);
+        gestaoDeLivrosButton.addActionListener(this::gestaoDeLivrosButtonActionPerformed);
+        gestaoDeEmprestimosButton.addActionListener(this::gestaoDeEmprestimosButtonActionPerformed);
+        fazerDevolucaoButton.addActionListener(this::fazerDevolucaoButtonActionPerformed);
+
+        searchLivro.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                DefaultTableModel obj = (DefaultTableModel) tabelaLivros.getModel();
+                TableRowSorter<DefaultTableModel> obj1 = new TableRowSorter<>(obj);
+                tabelaLivros.setRowSorter(obj1);
+                obj1.setRowFilter(RowFilter.regexFilter(searchLivro.getText()));
+            }
+        });
+        searchSocio.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                DefaultTableModel obj = (DefaultTableModel) tabelaSocios.getModel();
+                TableRowSorter<DefaultTableModel> obj1 = new TableRowSorter<>(obj);
+                tabelaSocios.setRowSorter(obj1);
+                obj1.setRowFilter(RowFilter.regexFilter(searchSocio.getText()));
+            }
+        });
     }
 
     private void confirmarButtonActionPerformed(ActionEvent actionEvent){
-        if (tabelaLivros.getSelectedRow() == -1 && tabelaSocios.getSelectedRow() == -1) {
+        if (tabelaLivros.getSelectedRow() == -1 || tabelaSocios.getSelectedRow() == -1) {
             errorInvalidTableIndex();
         }
         int livro = getLivroSelecionado();
@@ -100,12 +128,12 @@ public class MenuFazerEmprestimo extends JFrame{
 
     public int getLivroSelecionado() {
         int row = tabelaLivros.getSelectedRow();
-        String[] data = new String[8];
+        String[] data = new String[9];
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             data[i] = tabelaLivros.getModel().getValueAt(row, i).toString();
         }
-        return Integer.parseInt(data[7]);
+        return Integer.parseInt(data[0]);
     }
     public int getSocioSelecionado() {
         int row = tabelaSocios.getSelectedRow();
@@ -120,13 +148,39 @@ public class MenuFazerEmprestimo extends JFrame{
     public void errorInvalidTableIndex() {
         JOptionPane.showMessageDialog(null, "Tem de selecionar uma opcao em cada tabela!");
     }
-
     public void close() {
         setVisible(false);
         dispose();
 
         MenuGestaoEmprestimo menuGestaoEmprestimo = new MenuGestaoEmprestimo("Menu Gestao de Emprestimos");
         menuGestaoEmprestimo.setVisible(true);
+    }
+
+    public void paginaIncialButtonButtonActionPerformed(ActionEvent e){
+        setVisible(false);
+        dispose();
+        MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");
+        menuPrincipal.setVisible(true);
+    }
+
+    private void gestaoDeLivrosButtonActionPerformed(ActionEvent actionEvent){
+        dispose();
+        MenuGestaoLivros menuGestaoLivros = new MenuGestaoLivros("Menu Gestão de Livros");
+        menuGestaoLivros.setVisible(true);
+    }
+
+    private void gestaoDeEmprestimosButtonActionPerformed(ActionEvent actionEvent){
+        setVisible(false);
+        dispose();
+        MenuGestaoEmprestimo menuGestaoEmprestimos = new MenuGestaoEmprestimo("Menu Gestão de Emprestimos");
+        menuGestaoEmprestimos.setVisible(true);
+    }
+
+    private void fazerDevolucaoButtonActionPerformed(ActionEvent actionEvent){
+        setVisible(false);
+        dispose();
+        MenuFazerDevolucao menuFazerDevolucao = new MenuFazerDevolucao("Menu Fazer Devolucao");
+        menuFazerDevolucao.setVisible(true);
     }
 
 }

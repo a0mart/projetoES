@@ -24,16 +24,18 @@ public class MenuDetalhesLivro extends JFrame{
 
     private GestorBaseDados gestorBaseDados;
 
+    private int menuPrincipal;
+
     private int stock;
 
 
-    public MenuDetalhesLivro(String titulo, int stock){
+    public MenuDetalhesLivro(String titulo, int stock, int menuPrincipal){
         super(titulo);
 
         gestorBaseDados = GestorBaseDados.getGestorBaseDados();
         this.stock = stock;
+        this.menuPrincipal= menuPrincipal;
 
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setContentPane(menuDetalhesLivro);
 
         labelTitulo.setText(gestorBaseDados.getStocks().get(stock).getTitulo());
@@ -42,13 +44,27 @@ public class MenuDetalhesLivro extends JFrame{
         labelSubGenero.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getSubGenero()));
         //labelEditora.setText(stock.getEditora);
         labelEdicao.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getNumeroEdicao()));
-        labelEdicao.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getAno()));
+        labelano.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getAno()));
         labelISBN.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getIsbn()));
         labelStock.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getQuantidadeLivrosDisponivel()));
 
-        setMinimumSize(new Dimension(900, 600));
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
 
+        paginaInicialButton.addActionListener(this::paginaIncialButtonButtonActionPerformed);
+
+    }
+
+    public void paginaIncialButtonButtonActionPerformed(ActionEvent e){
+        setVisible(false);
+        dispose();
+        if (menuPrincipal == 1){
+            MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");
+            menuPrincipal.setVisible(true);
+        }else {
+            MenuPaginaInicialSocio menuPaginaInicialSocio = new MenuPaginaInicialSocio("Menu Principal");
+            menuPaginaInicialSocio.setVisible(true);
+        }
 
     }
 
