@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class MenuDetalhesFornecedor extends JFrame{
     private JPanel menuDetalhesFornecedor;
@@ -21,12 +22,14 @@ public class MenuDetalhesFornecedor extends JFrame{
     private JLabel teleLabel;
     private JLabel estadoLabel;
     private JButton verButton;
+    private List<Livro> catalogo;
 
     public MenuDetalhesFornecedor(String title,int id) throws HeadlessException {
         super(title);
 
         Fornecedor f = getDetalhesFornecedor(id);
 
+        this.catalogo = f.getLivrosDisponiveis();
         namelabel.setText(f.getNome());
         nifName.setText(String.valueOf(f.getNif()));
         tipoLabel.setText(String.valueOf(f.getTipoFornecedor()));
@@ -44,11 +47,17 @@ public class MenuDetalhesFornecedor extends JFrame{
         gestãoDeLivrosButton.addActionListener(this::btngestãoDeLivrosActionPerformed);
         gestãoDeEmprestimosButton.addActionListener(this::btngestãoDeEmprestimosActionPerformed);
         gestãoDeFornecedoresButton.addActionListener(this::btnFornecedoresActionPerformed);
+        verButton.addActionListener(this::btnverActionPerformed);
     }
 
     public Fornecedor getDetalhesFornecedor(int id){
         GestorBaseDados gBDados = GestorBaseDados.getGestorBaseDados();
         return gBDados.getFornecedores().get(id);
+    }
+
+    public void btnverActionPerformed(ActionEvent e) {
+        MenuCatalogoFornecedor menuCatalogoFornecedor = new MenuCatalogoFornecedor("Menu Principal",catalogo);
+        menuCatalogoFornecedor.setVisible(true);
     }
 
     public void btnpáginaInicialActionPerformed(ActionEvent e) {

@@ -9,14 +9,26 @@ public class MenuCatalogoFornecedor extends JFrame{
     private JButton voltarButton;
     private JTable table1;
     private GestorBaseDados gestorBaseDados;
-    private int id;
     private List<Livro> catalogo;
 
-    public MenuCatalogoFornecedor(String title, int id, List<Livro> catalogo) throws HeadlessException {
+    public MenuCatalogoFornecedor(String title, List<Livro> catalogo) throws HeadlessException {
         super(title);
-        this.id = id;
         this.catalogo = catalogo;
-        table1.setModel(new DefaultTableModel(catalogo, new String[]{ "Titulo", "Autor", "Genero", "SubGenero", "Numero de Edicao", "ISBN", "Ano", "ID"}));
+
+        String[] colunas = {"Título", "Autor"};
+        DefaultTableModel model = new DefaultTableModel(colunas, 0);
+
+        // Adiciona dados dos livros ao modelo da tabela
+        for (Livro livro : catalogo) {
+            String titulo = livro.getTitulo();
+            String autor = livro.getAutor();
+
+            Object[] row = {titulo, autor};
+            model.addRow(row);
+        }
+
+        table1.setModel(model);
+
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(menuCatalogoFornecedor);
         setMinimumSize(new Dimension(900, 600));
@@ -26,7 +38,5 @@ public class MenuCatalogoFornecedor extends JFrame{
     }
     public void btnvoltarActionPerformed(ActionEvent e) {
         dispose();
-        MenuDetalhesFornecedor menuDetalhesFornecedor = new MenuDetalhesFornecedor("Menu Destalhes do fornecedor",id-1);
-        menuDetalhesFornecedor.setVisible(true);
     }
 }
