@@ -79,7 +79,6 @@ public class MenuGestaoLivros extends JFrame{
     }
 
     public void btnLivroActionPerformed(ActionEvent e) {
-        dispose();
         BotaoLivro botao = (BotaoLivro) e.getSource();
         int id = -1;
         for (Stock s:gestorBaseDados.getStocks()) {

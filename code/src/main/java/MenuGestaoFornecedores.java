@@ -57,12 +57,19 @@ public class MenuGestaoFornecedores extends JFrame{
         páginaInicialButton.addActionListener(this::btnpáginaInicialActionPerformed);
         gestãoDeLivrosButton.addActionListener(this::btngestãoDeLivrosActionPerformed);
         gestãoDeEmprestimosButton.addActionListener(this::btngestãoDeEmprestimosActionPerformed);
+        adicionarFornecedorButton.addActionListener(this::btnadicionarFornecedorActionPerformed);
 
     }
 
     public void btngestãoDeEmprestimosActionPerformed(ActionEvent e) {
         MenuGestaoEmprestimo menuGestaoEmprestimos = new MenuGestaoEmprestimo("Menu Gestão de Emprestimos");
         menuGestaoEmprestimos.setVisible(true);
+    }
+
+    public void btnadicionarFornecedorActionPerformed(ActionEvent e) {
+        dispose();
+        MenuAdicionarFornecedor menuAdicionarFornecedor = new MenuAdicionarFornecedor("Menu Adicionar Fornecedor");
+        menuAdicionarFornecedor.setVisible(true);
     }
 
     public void btngestãoDeLivrosActionPerformed(ActionEvent e) {
