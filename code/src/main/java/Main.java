@@ -2,6 +2,7 @@ public class Main {
     public static void main(String[] args) {
         GestorBaseDados gestorBaseDados = GestorBaseDados.getGestorBaseDados();
 
+        Funcionario f = new Funcionario("func",117,"rua sfsdf",978654123,"func@mail.pt","123");
         Socio socio3 = new Socio("Manel", 123, "Casa", 345, "Jaaa@");
         Socio socio1 = new Socio("Fernardo", 324, "Casa", 345, "Jaaa@");
         Socio socio2 = new Socio("Jeremias", 983, "Casa", 345, "Jaaa@");
@@ -11,6 +12,7 @@ public class Main {
         fornecedor2.setLivrosDisponiveis(gestorBaseDados.getLivros());
         gestorBaseDados.addFornecedor(fornecedor1);
         gestorBaseDados.addFornecedor(fornecedor2);
+        gestorBaseDados.addFuncionario(f);
         gestorBaseDados.addSocio(socio3);
         gestorBaseDados.addSocio(socio1);
         gestorBaseDados.addSocio(socio2);

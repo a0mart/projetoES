@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class LoginForm extends JFrame {
     private JLabel email;
@@ -28,17 +29,14 @@ public class LoginForm extends JFrame {
         String pass = passField.getText();
 
 
-        if(email.equals("func@func") && pass.equals("password")){
-            dispose();
-            MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");
-            menuPrincipal.setVisible(true);
-
-        }else if(email.equals("socio@socio") && pass.equals("password")){
-            dispose();
-            MenuPaginaInicialSocio menuPaginaInicialSocio = new MenuPaginaInicialSocio("Menu Pagina Inicial Socio");
-            menuPaginaInicialSocio.setVisible(true);
-        } else{
-            JOptionPane.showMessageDialog(this, "Email ou password incorretos", "Erro", JOptionPane.ERROR_MESSAGE);
+        for (Funcionario f:GestorBaseDados.getGestorBaseDados().getFuncionarios()) {
+            if (f.getEmail().equals(email) && f.getPassword().equals(pass)){
+                dispose();
+                MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");
+                menuPrincipal.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(this, "Email ou password incorretos", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
