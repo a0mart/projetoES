@@ -42,6 +42,8 @@ public class MenuGestaoFornecedores extends JFrame{
                         botoes[linha][coluna].setFornecedor(f);
                         id = f.getId();
                     }
+                }else{
+                    botoes[linha][coluna].setEnabled(false);
                 }
 
                 botoes[linha][coluna].addActionListener(this::btnFornecedorActionPerformed);

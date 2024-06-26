@@ -35,7 +35,6 @@ public class MenuGestaoLivros extends JFrame{
             for (int coluna = 0; coluna < 3; ++coluna) {
                 botoes[linha][coluna] = new BotaoLivro(linha, coluna);
 
-                // Ensure there are still books available in the iterator
                 if (livroIterator.hasNext()) {
                     Livro l = livroIterator.next();
                     new_id = l.getId();
@@ -43,6 +42,8 @@ public class MenuGestaoLivros extends JFrame{
                         botoes[linha][coluna].setLivro(l);
                         id = l.getId();
                     }
+                }else{
+                    botoes[linha][coluna].setEnabled(false);
                 }
 
                 botoes[linha][coluna].addActionListener(this::btnLivroActionPerformed);

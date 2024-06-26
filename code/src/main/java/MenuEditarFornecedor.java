@@ -1,10 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.List;
 
-public class MenuDetalhesFornecedor extends JFrame{
-    private JPanel menuDetalhesFornecedor;
+public class MenuEditarFornecedor extends JFrame{
+    private JPanel menuEditarFornecedor;
     private JButton páginaInicialButton;
     private JButton gestãoDeReservasButton;
     private JButton gestãoDeFornecedoresButton;
@@ -13,34 +12,30 @@ public class MenuDetalhesFornecedor extends JFrame{
     private JButton gestãoDeSóciosButton;
     private JButton gestãoDeLivrosButton;
     private JPanel painelLivros;
-    private JButton editarButton;
-    private JButton históricoButton;
-    private JLabel namelabel;
-    private JLabel nifName;
-    private JLabel tipoLabel;
-    private JLabel emailLabel;
-    private JLabel teleLabel;
-    private JLabel estadoLabel;
-    private JButton verButton;
-    private JLabel moradaLabel;
-    private List<Livro> catalogo;
+    private JButton cancelarButton;
+    private JButton confirmarButton;
+    private JButton carregarCatalogoButton;
+    private JTextField fieldNif;
+    private JTextField fieldNome;
+    private JComboBox comboBoxTipo;
+    private JTextField fieldTele;
+    private JTextField fieldMail;
+    private JTextField fieldMorada;
+    private JComboBox comboBoxEstado;
 
-    public MenuDetalhesFornecedor(String title,int id) throws HeadlessException {
+    public MenuEditarFornecedor(String title) throws HeadlessException {
         super(title);
+        comboBoxEstado.addItem(EstadoContaFornecedor.Ativa);
+        comboBoxEstado.addItem(EstadoContaFornecedor.Inativa);
+        comboBoxTipo.addItem(TipoFornecedor.EditoraAcademica);
+        comboBoxTipo.addItem(TipoFornecedor.DistribuidorInternacional);
+        comboBoxTipo.addItem(TipoFornecedor.EditoraIndependente);
+        comboBoxTipo.addItem(TipoFornecedor.DistribuidorNacional);
 
-        Fornecedor f = getDetalhesFornecedor(id);
 
-        this.catalogo = f.getLivrosDisponiveis();
-        namelabel.setText(f.getNome());
-        nifName.setText(String.valueOf(f.getNif()));
-        tipoLabel.setText(String.valueOf(f.getTipoFornecedor()));
-        emailLabel.setText(f.getEmail());
-        moradaLabel.setText(f.getMorada());
-        teleLabel.setText(String.valueOf(f.getTelefone()));
-        estadoLabel.setText(String.valueOf(f.getEstadoContaFornecedor()));
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setContentPane(menuDetalhesFornecedor);
+        setContentPane(menuEditarFornecedor);
         setMinimumSize(new Dimension(900, 600));
         pack();
 
@@ -49,25 +44,8 @@ public class MenuDetalhesFornecedor extends JFrame{
         gestãoDeLivrosButton.addActionListener(this::btngestãoDeLivrosActionPerformed);
         gestãoDeEmprestimosButton.addActionListener(this::btngestãoDeEmprestimosActionPerformed);
         gestãoDeFornecedoresButton.addActionListener(this::btnFornecedoresActionPerformed);
-        verButton.addActionListener(this::btnverActionPerformed);
-        editarButton.addActionListener(this::btneditarActionPerformed);
+        cancelarButton.addActionListener(this::btncancelarActionPerformed);
     }
-
-    public Fornecedor getDetalhesFornecedor(int id){
-        GestorBaseDados gBDados = GestorBaseDados.getGestorBaseDados();
-        return gBDados.getFornecedores().get(id);
-    }
-
-    public void btnverActionPerformed(ActionEvent e) {
-        MenuCatalogoFornecedor menuCatalogoFornecedor = new MenuCatalogoFornecedor("Menu Ver Catalogo",catalogo);
-        menuCatalogoFornecedor.setVisible(true);
-    }
-
-    public void btneditarActionPerformed(ActionEvent e) {
-        MenuEditarFornecedor menuEditarFornecedor = new MenuEditarFornecedor("Menu Editar Fornecedor");
-        menuEditarFornecedor.setVisible(true);
-    }
-
     public void btnpáginaInicialActionPerformed(ActionEvent e) {
         dispose();
         MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");
@@ -78,6 +56,10 @@ public class MenuDetalhesFornecedor extends JFrame{
         dispose();
         MenuGestaoLivros menuGestaoLivros = new MenuGestaoLivros("Menu Gestão de Livros");
         menuGestaoLivros.setVisible(true);
+    }
+
+    public void btncancelarActionPerformed(ActionEvent e) {
+        dispose();
     }
 
     public void btngestãoDeEmprestimosActionPerformed(ActionEvent e) {

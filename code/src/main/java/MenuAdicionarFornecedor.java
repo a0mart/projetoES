@@ -1,6 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuAdicionarFornecedor extends JFrame{
     private JPanel menuAdicionarFornecedor;
@@ -15,12 +20,16 @@ public class MenuAdicionarFornecedor extends JFrame{
     private JButton carregarCatalogoButton;
     private JButton cancelarButton;
     private JButton confirmarButton;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField fieldNif;
+    private JTextField fieldNome;
     private JComboBox comboBoxTipo;
-    private JTextField textField4;
+    private JTextField fieldMail;
     private JComboBox comboBoxEstado;
-    private JTextField textField1;
+    private JTextField fieldTele;
+    private JTextField fieldMorada;
+    private List<Livro> catalogo;
+
+    private GestorBaseDados gestorBaseDados;
 
     public MenuAdicionarFornecedor(String title) throws HeadlessException {
         super(title);
@@ -28,6 +37,7 @@ public class MenuAdicionarFornecedor extends JFrame{
         comboBoxTipo.addItem(TipoFornecedor.DistribuidorInternacional);
         comboBoxTipo.addItem(TipoFornecedor.EditoraIndependente);
         comboBoxTipo.addItem(TipoFornecedor.DistribuidorNacional);
+        gestorBaseDados = GestorBaseDados.getGestorBaseDados();
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(menuAdicionarFornecedor);
@@ -36,16 +46,52 @@ public class MenuAdicionarFornecedor extends JFrame{
 
         /** Listeners */
         cancelarButton.addActionListener(this::btncancelarActionPerformed);
+        confirmarButton.addActionListener(this::btnconfirmarActionPerformed);
         páginaInicialButton.addActionListener(this::btnpáginaInicialActionPerformed);
         gestãoDeLivrosButton.addActionListener(this::btngestãoDeLivrosActionPerformed);
         gestãoDeEmprestimosButton.addActionListener(this::btngestãoDeEmprestimosActionPerformed);
         gestãoDeFornecedoresButton.addActionListener(this::btnFornecedoresActionPerformed);
+        carregarCatalogoButton.addActionListener(this::btnCarregarCatalogoActionPerformed);
+    }
+
+    public static List<Livro> loadCatalogoFromFile(String filePath) {
+        List<Livro> catalogo = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values.length == 7) {
+                    Livro livro = new Livro(values[0], values[1], Genero.ficcao/*values[2]*/, SubGenero.suspense /*values[3]*/, Integer.parseInt(values[4]), Integer.parseInt(values[5]), Integer.parseInt(values[6]));
+                    catalogo.add(livro);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return catalogo;
     }
 
     public void btncancelarActionPerformed(ActionEvent e) {
         dispose();
         MenuGestaoFornecedores menuGestaoFornecedores = new MenuGestaoFornecedores("Menu gestão de fornecedores");
         menuGestaoFornecedores.setVisible(true);
+    }
+
+    public void btnconfirmarActionPerformed(ActionEvent e) {
+        // Assuming you have a Fornecedor object created with the input fields
+        if (catalogo != null && fieldNome.getText().compareTo("") != 0 && fieldNif.getText().compareTo("") != 0 && fieldTele.getText().compareTo("") != 0 && fieldMail.getText().compareTo("") != 0 && fieldMorada.getText().compareTo("") != 0) {
+            Fornecedor f = new Fornecedor(fieldNome.getText(), Integer.parseInt(fieldNif.getText()), fieldMorada.getText(), Integer.parseInt(fieldTele.getText()), fieldMail.getText(), (TipoFornecedor) comboBoxTipo.getSelectedItem());
+            f.setLivrosDisponiveis(catalogo);
+            gestorBaseDados.addFornecedor(f);
+            dispose();
+            MenuGestaoFornecedores menuGestaoFornecedores = new MenuGestaoFornecedores("Menu gestão de fornecedores");
+            menuGestaoFornecedores.setVisible(true);
+        }else
+        {
+            JOptionPane.showMessageDialog(this, "Campos em falta!");
+        }
     }
 
     public void btnFornecedoresActionPerformed(ActionEvent e) {
@@ -69,5 +115,15 @@ public class MenuAdicionarFornecedor extends JFrame{
         dispose();
         MenuGestaoLivros menuGestaoLivros = new MenuGestaoLivros("Menu Gestão de Livros");
         menuGestaoLivros.setVisible(true);
+    }
+
+    public void btnCarregarCatalogoActionPerformed(ActionEvent e) {
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+            catalogo = loadCatalogoFromFile(filePath);
+            JOptionPane.showMessageDialog(this, "Catálogo carregado com sucesso!");
+        }
     }
 }
