@@ -3,9 +3,9 @@ public class Main {
         GestorBaseDados gestorBaseDados = GestorBaseDados.getGestorBaseDados();
 
         Funcionario f = new Funcionario("func",117,"rua sfsdf",978654123,"func@mail.pt","123");
-        Socio socio3 = new Socio("Manel", 123, "Casa", 345, "Jaaa@");
-        Socio socio1 = new Socio("Fernardo", 324, "Casa", 345, "Jaaa@");
-        Socio socio2 = new Socio("Jeremias", 983, "Casa", 345, "Jaaa@");
+        Socio socio3 = new Socio("Manel", 123, "Casa", 345, "so1@mail.pt","123");
+        Socio socio1 = new Socio("Fernardo", 324, "Casa", 345, "so2@mail.pt","456");
+        Socio socio2 = new Socio("Jeremias", 983, "Casa", 345, "so3@mail.pt","789");
         Fornecedor fornecedor1 = new Fornecedor("Porto Editora", 456, "Porto, rua bla bla bla nº87", 933333333, "emailluis@teste.pt",TipoFornecedor.EditoraIndependente);
         Fornecedor fornecedor2 = new Fornecedor("Lisboa Editora Distribuição", 789, "Lisboa, rua bla bla bla nº14", 922222222, "emailjoao@teste.pt",TipoFornecedor.DistribuidorNacional);
         fornecedor1.setLivrosDisponiveis(gestorBaseDados.getLivros());

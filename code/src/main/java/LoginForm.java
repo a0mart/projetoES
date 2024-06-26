@@ -27,18 +27,38 @@ public class LoginForm extends JFrame {
     private void entrarButtonActionPerformed(ActionEvent actionEvent) {
         String email = emailField.getText();
         String pass = passField.getText();
+        boolean found = false;
 
-
-        for (Funcionario f:GestorBaseDados.getGestorBaseDados().getFuncionarios()) {
-            if (f.getEmail().equals(email) && f.getPassword().equals(pass)){
+        // Check if the user is a Funcionario
+        for (Funcionario f : GestorBaseDados.getGestorBaseDados().getFuncionarios()) {
+            if (f.getEmail().equals(email) && f.getPassword().equals(pass)) {
                 dispose();
                 MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");
                 menuPrincipal.setVisible(true);
-            }else{
-                JOptionPane.showMessageDialog(this, "Email ou password incorretos", "Erro", JOptionPane.ERROR_MESSAGE);
+                found = true;
+                break; // Exit the loop once a match is found
             }
         }
+
+        // Check if the user is a Socio
+        if (!found) { // Only check Socios if no Funcionario match was found
+            for (Socio s : GestorBaseDados.getGestorBaseDados().getSocios()) {
+                if (s.getEmail().equals(email) && s.getPassword().equals(pass)) {
+                    dispose();
+                    MenuPaginaInicialSocio menuPaginaInicialSocio = new MenuPaginaInicialSocio("Menu Principal");
+                    menuPaginaInicialSocio.setVisible(true);
+                    found = true;
+                    break; // Exit the loop once a match is found
+                }
+            }
+        }
+
+        // If no match was found, show the error message
+        if (!found) {
+            JOptionPane.showMessageDialog(this, "Email ou password incorretos", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
+
 
     private void registarButtonActionPerformed(ActionEvent actionEvent){
             dispose();

@@ -10,10 +10,13 @@ public class Socio extends Contacto{
 
     private List<Multa> multasPorPagar;
 
+    private String password;
 
-    public Socio(String nome, int nif, String morada, int telefone, String email) {
+
+    public Socio(String nome, int nif, String morada, int telefone, String email, String pass) {
         super(nome, nif, morada, telefone, email);
         this.id = ++socios;
+        this.password = pass;
         this.estadoContaSocio = EstadoContaSocio.Ativo; //por omissao
         this.emprestimosAtivos = new ArrayList<>();
         this.multasPorPagar = new ArrayList<>();
@@ -26,6 +29,14 @@ public class Socio extends Contacto{
             estadoContaSocio = EstadoContaSocio.Ativo;
         }
         return estadoContaSocio;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public List<Emprestimo> getEmprestimosAtivos() {

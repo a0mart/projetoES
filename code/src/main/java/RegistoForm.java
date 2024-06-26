@@ -54,7 +54,7 @@ public class RegistoForm extends JFrame{
             }else if(email.contains("@") == false){
                 JOptionPane.showMessageDialog(this, "Email incorreto", "Erro", JOptionPane.ERROR_MESSAGE);
             }else if(pass1.equals(pass2)){
-                Socio socio = new Socio(nome, Integer.parseInt(nif), morada, Integer.parseInt(cc), email);
+                Socio socio = new Socio(nome, Integer.parseInt(nif), morada, Integer.parseInt(cc), email,"123");
                 GestorBaseDados gestorBaseDados = GestorBaseDados.getGestorBaseDados();
                 gestorBaseDados.addSocio(socio);
                 dispose();
