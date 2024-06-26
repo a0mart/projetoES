@@ -2,11 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class RegistoForm extends JFrame{
+public class RegistoDeSocio extends JFrame{
     private JPanel registo;
     private JLabel nome;
     private JLabel email;
-    private JButton efetuarRegistoButton;
     private JLabel pass;
     private JLabel confpass;
     private JLabel morada;
@@ -21,15 +20,14 @@ public class RegistoForm extends JFrame{
     private JTextField nifField;
     private JTextField ccField;
     private JTextField contacoField;
+    private JButton efetuarRegistoButton;
 
-
-    public RegistoForm(String titulo){
-        super(titulo);
+    public RegistoDeSocio(String title) throws HeadlessException {
+        super(title);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setContentPane(registo);
         setMinimumSize(new Dimension(600, 300));
         pack();
-
         /** Listeners */
         efetuarRegistoButton.addActionListener(this::efetuarRegistoButtonActionPerformed);
     }
@@ -58,8 +56,8 @@ public class RegistoForm extends JFrame{
                 GestorBaseDados gestorBaseDados = GestorBaseDados.getGestorBaseDados();
                 gestorBaseDados.addSocio(socio);
                 dispose();
-                LoginForm loginForm = new LoginForm("Login");
-                loginForm.setVisible(true);
+                MenuGestaoSocios menuGestaoSocios = new MenuGestaoSocios("Gestão de sócios");
+                menuGestaoSocios.setVisible(true);
                 //enviar mensagem de sucesso
                 JOptionPane.showMessageDialog(this, "Registo efetuado com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             }else{
@@ -67,4 +65,5 @@ public class RegistoForm extends JFrame{
             }
         }
     }
+
 }

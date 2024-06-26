@@ -16,6 +16,7 @@ public class MenuGestaoSocios extends JFrame {
     private JTextField procurarNomeTextField;
     private JButton lupe;
     private JTable tabelaSocios;
+    private JButton registarSócioButton;
 
     private GestorBaseDados gestorBaseDados;
     
@@ -54,6 +55,13 @@ public class MenuGestaoSocios extends JFrame {
         /** Listeners */
         lupe.addActionListener(this::lupeActionPerformed);
         paginaInicialButton.addActionListener(this::paginaInicialButtonActionPerformed);
+        registarSócioButton.addActionListener(this::registarSocioButtonActionPerformed);
+    }
+
+    private void registarSocioButtonActionPerformed(ActionEvent actionEvent) {
+        dispose();
+        RegistoDeSocio registoDeSocio = new RegistoDeSocio("Registar Sócio");
+        registoDeSocio.setVisible(true);
     }
 
     private void paginaInicialButtonActionPerformed(ActionEvent actionEvent) {
