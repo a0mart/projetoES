@@ -4,6 +4,7 @@ import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Iterator;
 
 public class MenuAtualizarLivro extends JFrame{
     private JButton gestaoDeSociosButton;
@@ -28,25 +29,29 @@ public class MenuAtualizarLivro extends JFrame{
 
         gestorBaseDados = GestorBaseDados.getGestorBaseDados();
 
-        String[][] dataLivros = new String[gestorBaseDados.getLivros().size()][7];
-        for (int i = 0; i < gestorBaseDados.getLivros().size(); i++){
-            int id = gestorBaseDados.getLivros().get(i).getId();
-            String titulo = gestorBaseDados.getLivros().get(i).getTitulo();
-            String autor = gestorBaseDados.getLivros().get(i).getAutor();
-            Genero genero = gestorBaseDados.getLivros().get(i).getGenero();
-            SubGenero subGenero = gestorBaseDados.getLivros().get(i).getSubGenero();
-            int numeroEdicao = gestorBaseDados.getLivros().get(i).getNumeroEdicao();
-            int isbn = gestorBaseDados.getLivros().get(i).getIsbn();
-            int ano = gestorBaseDados.getLivros().get(i).getAno();
-            EstadoLivro estadoLivro = gestorBaseDados.getLivros().get(i).getEstadoLivro();
+        Iterator<Livro> livroIterator = gestorBaseDados.getLivros().iterator();
 
-            dataLivros[i] = new String[]{String.valueOf(id), titulo, autor, String.valueOf(genero), String.valueOf(subGenero), String.valueOf(numeroEdicao), String.valueOf(isbn), String.valueOf(ano), String.valueOf(estadoLivro)};
+        String[] colunasL = {"ID", "Titulo", "Autor", "Genero", "Sub Genero", "NºEdicao", "ISBN", "Ano", "Código", "Estado do Livro"};
+        DefaultTableModel modelo = new DefaultTableModel(colunasL, 0);
 
+        while (livroIterator.hasNext()){
+            Livro livro = livroIterator.next();
+                int id = livro.getId();
+                String titulo = livro.getTitulo();
+                String autor = livro.getAutor();
+                Genero genero = livro.getGenero();
+                SubGenero subGenero = livro.getSubGenero();
+                int numeroEdicao = livro.getNumeroEdicao();
+                int isbn = livro.getIsbn();
+                int ano = livro.getAno();
+                int codigo = livro.getCodigo();
+                EstadoLivro estadoLivro = livro.getEstadoLivro();
+
+                Object[] row = {id, titulo, autor, genero, subGenero, numeroEdicao, isbn, ano, codigo, estadoLivro};
+                modelo.addRow(row);
         }
-        tabelaLivros.setModel(new DefaultTableModel(
-                dataLivros,
-                new String[]{"ID", "Titulo", "Autor", "Genero", "Sub Genero", "NºEdicao", "ISBN", "Ano", "Estado"}
-        ));
+        tabelaLivros.setModel(modelo);
+
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();

@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.time.LocalDate;
+import java.util.Iterator;
 
 
 public class MenuGestaoEmprestimo extends JFrame{
@@ -30,23 +31,26 @@ public class MenuGestaoEmprestimo extends JFrame{
 
 
 
-        String[][] dataEmprestimos = new String[gestorBaseDados.getEmprestimos().size()][5];
-        for (int i = 0; i < gestorBaseDados.getEmprestimos().size(); i++){
-            if (gestorBaseDados.getEmprestimos().get(i).getEstadoEmprestimo() == EstadoEmprestimo.Aberto || gestorBaseDados.getEmprestimos().get(i).getEstadoEmprestimo() == EstadoEmprestimo.EmAtraso){
-                int id = gestorBaseDados.getEmprestimos().get(i).getIdEmprestimo();
-                String livro = gestorBaseDados.getEmprestimos().get(i).getNomeLivro();
-                String socio = gestorBaseDados.getEmprestimos().get(i).getNomeSocio();
-                LocalDate dataEmprestimo = gestorBaseDados.getEmprestimos().get(i).getDataEmprestimo();
-                EstadoEmprestimo estadoEmprestimo = gestorBaseDados.getEmprestimos().get(i).getEstadoEmprestimo();
-                LocalDate dataEntrega = gestorBaseDados.getEmprestimos().get(i).getDataDevolucao();
-                dataEmprestimos[i] = new String[]{String.valueOf(id), livro, socio, String.valueOf(dataEmprestimo), String.valueOf(estadoEmprestimo), String.valueOf(dataEntrega)};
+        Iterator<Emprestimo> emprestimoIterator = gestorBaseDados.getEmprestimos().iterator();
 
+        String[] colunas = { "ID", "Titulo", "Nome", "Data de Emprestimo", "Data de Entrega", "Estado"};
+        DefaultTableModel model = new DefaultTableModel(colunas, 0);
+
+        while (emprestimoIterator.hasNext()) {
+            Emprestimo emprestimo = emprestimoIterator.next();
+            if (emprestimo.getEstadoEmprestimo() == EstadoEmprestimo.Aberto || emprestimo.getEstadoEmprestimo() == EstadoEmprestimo.EmAtraso) {
+                int id = emprestimo.getIdEmprestimo();
+                String livro = emprestimo.getNomeLivro();
+                String socio = emprestimo.getNomeSocio();
+                LocalDate dataEmprestimo = emprestimo.getDataEmprestimo();
+                LocalDate dataEntrega = emprestimo.getDataDevolucao();
+                EstadoEmprestimo estadoEmprestimo = emprestimo.getEstadoEmprestimo();
+
+                Object[] row = {id, livro, socio, dataEmprestimo, dataEntrega, estadoEmprestimo};
+                model.addRow(row);
             }
         }
-        tabelaEmprestimos.setModel(new DefaultTableModel(
-                dataEmprestimos,
-                new String[]{ "ID", "Titulo", "Nome", "Data do Emprestimo", "Estado so Emprestimo", "Data de Entrega"}
-        ));
+        tabelaEmprestimos.setModel(model);
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();

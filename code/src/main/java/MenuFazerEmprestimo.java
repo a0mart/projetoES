@@ -33,48 +33,46 @@ public class MenuFazerEmprestimo extends JFrame{
         setContentPane(menuFazerEmprestimo);
 
         Iterator<Socio> socioIterator = gestorBaseDados.getSocios().iterator();
+        Iterator<Livro> livoIterator = gestorBaseDados.getLivros().iterator();
 
+        String[] colunas = { "Nome", "NIF", "Morada", "Telefone", "Email", "ID"};
+        DefaultTableModel model = new DefaultTableModel(colunas, 0);
 
-        String[][] dataSocios = new String[gestorBaseDados.getSocios().size()][5];
-        for (int i = 0; i < gestorBaseDados.getSocios().size(); i++){
+        while (socioIterator.hasNext()) {
+            Socio socio = socioIterator.next();
+            String nome = socio.getNome();
+            int nif = socio.getNif();
+            String morada = socio.getMorada();
+            int telefone = socio.getTelefone();
+            String email = socio.getEmail();
+            int id = socio.getId();
 
-            String nome = gestorBaseDados.getSocios().get(i).getNome();
-            int nif = gestorBaseDados.getSocios().get(i).getNif();
-            String morada = gestorBaseDados.getSocios().get(i).getMorada();
-            int telefone = gestorBaseDados.getSocios().get(i).getTelefone();
-            String email = gestorBaseDados.getSocios().get(i).getEmail();
-            int id = gestorBaseDados.getSocios().get(i).getId();
-
-
-            dataSocios[i] = new String[]{nome, String.valueOf(nif), morada, String.valueOf(telefone), email, String.valueOf(id)};
+            Object[] row = {nome, nif, morada, telefone, email, id};
+            model.addRow(row);
         }
-        tabelaSocios.setModel(new DefaultTableModel(
-                dataSocios,
-                new String[]{ "Nome", "NIF", "Morada", "Telefone", "Email", "ID"}
-        ));
+        tabelaSocios.setModel(model);
 
-        String[][] dataLivros = new String[gestorBaseDados.getLivros().size()][7];
-        for (int i = 0; i < gestorBaseDados.getLivros().size(); i++){
-            if (gestorBaseDados.getLivros().get(i).getEstadoLivro() == EstadoLivro.Disponivel){
-                int id = gestorBaseDados.getLivros().get(i).getId();
-                String titulo = gestorBaseDados.getLivros().get(i).getTitulo();
-                String autor = gestorBaseDados.getLivros().get(i).getAutor();
-                Genero genero = gestorBaseDados.getLivros().get(i).getGenero();
-                SubGenero subGenero = gestorBaseDados.getLivros().get(i).getSubGenero();
-                int numeroEdicao = gestorBaseDados.getLivros().get(i).getNumeroEdicao();
-                int isbn = gestorBaseDados.getLivros().get(i).getIsbn();
-                int ano = gestorBaseDados.getLivros().get(i).getAno();
-                int codigo = gestorBaseDados.getLivros().get(i).getCodigo();
+        String[] colunasL = {"ID", "Titulo", "Autor", "Genero", "Sub Genero", "NºEdicao", "ISBN", "Ano", "Código"};
+        DefaultTableModel modelo = new DefaultTableModel(colunasL, 0);
 
-                dataLivros[i] = new String[]{String.valueOf(id), titulo, autor, String.valueOf(genero), String.valueOf(subGenero), String.valueOf(numeroEdicao), String.valueOf(isbn), String.valueOf(ano), String.valueOf(codigo)};
+        while (livoIterator.hasNext()){
+            Livro livro = livoIterator.next();
+            if (livro.getEstadoLivro() == EstadoLivro.Disponivel) {
+                int id = livro.getId();
+                String titulo = livro.getTitulo();
+                String autor = livro.getAutor();
+                Genero genero = livro.getGenero();
+                SubGenero subGenero = livro.getSubGenero();
+                int numeroEdicao = livro.getNumeroEdicao();
+                int isbn = livro.getIsbn();
+                int ano = livro.getAno();
+                int codigo = livro.getCodigo();
+
+                Object[] row = {id, titulo, autor, genero, subGenero, numeroEdicao, isbn, ano, codigo};
+                modelo.addRow(row);
             }
         }
-        tabelaLivros.setModel(new DefaultTableModel(
-                dataLivros,
-                new String[]{"ID", "Titulo", "Autor", "Genero", "Sub Genero", "NºEdicao", "ISBN", "Ano", "Código"}
-        ));
-
-
+        tabelaLivros.setModel(modelo);
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
