@@ -66,7 +66,7 @@ public class MenuEditarFornecedor extends JFrame{
         carregarCatalogoButton.addActionListener(this::btnCarregarCatalogoActionPerformed);
     }
 
-    public static java.util.List<Livro> loadCatalogoFromFile(String filePath) {
+    public static List<Livro> loadCatalogoFromFile(String filePath) {
         List<Livro> catalogo = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

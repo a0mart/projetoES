@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class TesteProjeto {
+public class TesteProjetoFlavio {
     @Test
     public void testLivro(){
         Livro livro = new Livro("EI", "Manel", Genero.tecnico, SubGenero.informatica, 1, 123, 2024);

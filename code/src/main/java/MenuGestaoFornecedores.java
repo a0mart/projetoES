@@ -59,10 +59,23 @@ public class MenuGestaoFornecedores extends JFrame{
 
         /** Listeners */
         páginaInicialButton.addActionListener(this::btnpáginaInicialActionPerformed);
-        gestãoDeLivrosButton.addActionListener(this::btngestãoDeLivrosActionPerformed);
         gestãoDeEmprestimosButton.addActionListener(this::btngestãoDeEmprestimosActionPerformed);
         adicionarFornecedorButton.addActionListener(this::btnadicionarFornecedorActionPerformed);
+        gestãoDeSóciosButton.addActionListener(this::btngestãoDeSociosActionPerformed);
+        gestãoDeLivrosButton.addActionListener(this::btngestaoDeLivrosActionPerformed);
 
+    }
+
+    private void btngestaoDeLivrosActionPerformed(ActionEvent actionEvent) {
+        dispose();
+        MenuGestaoLivros menuGestaoLivros = new MenuGestaoLivros("Menu Gestão de Livros");
+        menuGestaoLivros.setVisible(true);
+    }
+
+    private void btngestãoDeSociosActionPerformed(ActionEvent actionEvent) {
+        dispose();
+        MenuGestaoSocios menuGestaoSocios = new MenuGestaoSocios("Menu Gestão de Sócios");
+        menuGestaoSocios.setVisible(true);
     }
 
     public void btngestãoDeEmprestimosActionPerformed(ActionEvent e) {
@@ -76,11 +89,7 @@ public class MenuGestaoFornecedores extends JFrame{
         menuAdicionarFornecedor.setVisible(true);
     }
 
-    public void btngestãoDeLivrosActionPerformed(ActionEvent e) {
-        dispose();
-        MenuGestaoLivros menuGestaoLivros = new MenuGestaoLivros("Menu Gestão de Livros");
-        menuGestaoLivros.setVisible(true);
-    }
+
     public void btnpáginaInicialActionPerformed(ActionEvent e) {
         dispose();
         MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");

@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Reserva {
     private int idReserva = 1;
     private Stock livroReservado;
@@ -29,5 +31,9 @@ public class Reserva {
 
     public void setEstadoReserva(EstadoReserva estadoReserva) {
         this.estadoReserva = estadoReserva;
+    }
+
+    public void setLivroReservado(Stock livroReservado) {
+        this.livroReservado = livroReservado;
     }
 }

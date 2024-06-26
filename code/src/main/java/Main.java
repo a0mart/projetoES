@@ -14,7 +14,7 @@ public class Main {
         gestorBaseDados.criarStockeLivros("O autocarro", "Luis", Genero.ficcao, SubGenero.terror, 333, 476, 2024, 1);
         gestorBaseDados.criarStockeLivros("Nabos", "Esmeralda", Genero.ficcao, SubGenero.suspense, 546, 874, 1880, 4);
 
-        new MenuPrincipal("Menu Principal").setVisible(true);
+        new LoginForm("Login").setVisible(true);
     }
 }
 

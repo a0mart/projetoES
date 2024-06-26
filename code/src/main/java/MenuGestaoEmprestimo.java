@@ -52,6 +52,7 @@ public class MenuGestaoEmprestimo extends JFrame{
     }
 
 
+
     private void fazerEmprestimoButtonActionPerformed(ActionEvent actionEvent){
         setVisible(false);
         dispose();

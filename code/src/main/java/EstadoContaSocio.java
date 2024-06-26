@@ -1,4 +1,4 @@
 public enum EstadoContaSocio {
-    Ativa,
-    Inativa
+    Ativo,
+    Inativo
 }

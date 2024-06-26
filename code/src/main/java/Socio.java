@@ -4,20 +4,27 @@ import java.util.List;
 public class Socio extends Contacto{
     private static int socios = 0;
     private int id;
+
     private EstadoContaSocio estadoContaSocio;
     private List<Emprestimo> emprestimosAtivos;
 
     private List<Multa> multasPorPagar;
 
+
     public Socio(String nome, int nif, String morada, int telefone, String email) {
         super(nome, nif, morada, telefone, email);
         this.id = ++socios;
-        this.estadoContaSocio = null;
+        this.estadoContaSocio = EstadoContaSocio.Ativo; //por omissao
         this.emprestimosAtivos = new ArrayList<>();
         this.multasPorPagar = new ArrayList<>();
     }
 
     public EstadoContaSocio getEstadoContaSocio() {
+        if (multasPorPagar.size() > 0) {
+            estadoContaSocio = EstadoContaSocio.Inativo;
+        } else {
+            estadoContaSocio = EstadoContaSocio.Ativo;
+        }
         return estadoContaSocio;
     }
 
@@ -33,7 +40,7 @@ public class Socio extends Contacto{
         return multasPorPagar;
     }
 
-    public void setEstadoContaSocio(EstadoContaSocio estadoContaSocio) {
+    public void setEstadoContaSocio() {
         this.estadoContaSocio = estadoContaSocio;
     }
 
@@ -47,4 +54,6 @@ public class Socio extends Contacto{
     public void addEmprestimoAtivo(Emprestimo emprestimo) {
         emprestimosAtivos.add(emprestimo);
     }
+
+
 }

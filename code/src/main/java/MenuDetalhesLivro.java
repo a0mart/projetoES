@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class MenuDetalhesLivro extends JFrame{
     private JPanel menuDetalhesLivro;
@@ -48,5 +49,8 @@ public class MenuDetalhesLivro extends JFrame{
         setMinimumSize(new Dimension(900, 600));
         pack();
 
+
     }
+
+
 }
