@@ -33,7 +33,6 @@ public class MenuDetalhesLivro extends JFrame{
         gestorBaseDados = GestorBaseDados.getGestorBaseDados();
         this.stock = stock;
 
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setContentPane(menuDetalhesLivro);
 
         labelTitulo.setText(gestorBaseDados.getStocks().get(stock).getTitulo());
@@ -46,7 +45,7 @@ public class MenuDetalhesLivro extends JFrame{
         labelISBN.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getIsbn()));
         labelStock.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getQuantidadeLivrosDisponivel()));
 
-        setMinimumSize(new Dimension(900, 600));
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
 
         paginaInicialButton.addActionListener(this::paginaIncialButtonButtonActionPerformed);

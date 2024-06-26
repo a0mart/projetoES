@@ -1,6 +1,5 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class MenuAtualizarLivro extends JFrame{
@@ -9,11 +8,11 @@ public class MenuAtualizarLivro extends JFrame{
     private JButton gestaoDeEmprestimosButton;
     private JButton gestaoDeLivrosButton;
     private JButton gestaoDeRequisitosButton;
-    private JButton atualizarLivroButton;
     private JButton paginaInicialButton;
     private JTable table1;
     private JPanel menuAtualizarLivro;
     private JButton atualizarButton;
+    private JButton atualizarLivroButton1;
 
     private GestorBaseDados gestorBaseDados;
 
@@ -27,17 +26,17 @@ public class MenuAtualizarLivro extends JFrame{
 
         String[][] dataLivros = new String[gestorBaseDados.getLivros().size()][7];
         for (int i = 0; i < gestorBaseDados.getLivros().size(); i++){
-                int id = gestorBaseDados.getLivros().get(i).getId();
-                String titulo = gestorBaseDados.getLivros().get(i).getTitulo();
-                String autor = gestorBaseDados.getLivros().get(i).getAutor();
-                Genero genero = gestorBaseDados.getLivros().get(i).getGenero();
-                SubGenero subGenero = gestorBaseDados.getLivros().get(i).getSubGenero();
-                int numeroEdicao = gestorBaseDados.getLivros().get(i).getNumeroEdicao();
-                int isbn = gestorBaseDados.getLivros().get(i).getIsbn();
-                int ano = gestorBaseDados.getLivros().get(i).getAno();
-                EstadoLivro estadoLivro = gestorBaseDados.getLivros().get(i).getEstadoLivro();
+            int id = gestorBaseDados.getLivros().get(i).getId();
+            String titulo = gestorBaseDados.getLivros().get(i).getTitulo();
+            String autor = gestorBaseDados.getLivros().get(i).getAutor();
+            Genero genero = gestorBaseDados.getLivros().get(i).getGenero();
+            SubGenero subGenero = gestorBaseDados.getLivros().get(i).getSubGenero();
+            int numeroEdicao = gestorBaseDados.getLivros().get(i).getNumeroEdicao();
+            int isbn = gestorBaseDados.getLivros().get(i).getIsbn();
+            int ano = gestorBaseDados.getLivros().get(i).getAno();
+            EstadoLivro estadoLivro = gestorBaseDados.getLivros().get(i).getEstadoLivro();
 
-                dataLivros[i] = new String[]{titulo, autor, String.valueOf(genero), String.valueOf(subGenero), String.valueOf(numeroEdicao), String.valueOf(isbn), String.valueOf(ano), String.valueOf(id), String.valueOf(estadoLivro)};
+            dataLivros[i] = new String[]{titulo, autor, String.valueOf(genero), String.valueOf(subGenero), String.valueOf(numeroEdicao), String.valueOf(isbn), String.valueOf(ano), String.valueOf(id), String.valueOf(estadoLivro)};
 
         }
         table1.setModel(new DefaultTableModel(
@@ -45,7 +44,7 @@ public class MenuAtualizarLivro extends JFrame{
                 new String[]{"Titulo", "Autor", "Genero", "Sub Genero", "NºEdicao", "ISBN", "Ano", "ID", "Estado"}
         ));
 
-        setMinimumSize(new Dimension(900, 600));
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
 
         atualizarButton.addActionListener(this::atualizarButtonActionPerformed);

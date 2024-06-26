@@ -1,7 +1,9 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 
 
@@ -9,7 +11,6 @@ public class MenuFazerDevolucao extends JFrame{
     private JButton paginaInicialButton;
     private JButton gestaoDeMultasButton;
     private JButton gestaoDeSociosButton;
-    private JButton fazerDevolucaoButton;
     private JButton gestaoDeRequisitosButton;
     private JButton gestaoDeLivrosButton;
     private JButton gestaoDeEmprestimosButton;
@@ -17,15 +18,17 @@ public class MenuFazerDevolucao extends JFrame{
     private JTable tableEmprestimos;
     private JButton confirmarButton;
     private JPanel menuFazerDevolucao;
+    private JButton fazerDevolucaoButton1;
+    private JTextField searchEmprestimo;
 
     private GestorBaseDados gestorBaseDados;
 
     public MenuFazerDevolucao(String titulo){
         super(titulo);
-
+        gestorBaseDados = GestorBaseDados.getGestorBaseDados();
         setContentPane(menuFazerDevolucao);
 
-        gestorBaseDados = GestorBaseDados.getGestorBaseDados();
+
 
         String[][] dataEmprestimos = new String[gestorBaseDados.getEmprestimos().size()][6];
         for (int i = 0; i < gestorBaseDados.getEmprestimos().size(); i++){
@@ -45,13 +48,22 @@ public class MenuFazerDevolucao extends JFrame{
                 new String[]{ "ID", "Titulo", "Nome", "Data de Emprestimo", "Data de Entrega"}
         ));
 
-        setMinimumSize(new Dimension(900, 600));
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
 
         confirmarButton.addActionListener(this::confirmarButtonButtonActionPerformed);
         paginaInicialButton.addActionListener(this::paginaIncialButtonButtonActionPerformed);
         gestaoDeLivrosButton.addActionListener(this::gestaoDeLivrosButtonActionPerformed);
         gestaoDeEmprestimosButton.addActionListener(this::gestaoDeEmprestimosButtonActionPerformed);
+        fazerEmprestimoButton.addActionListener(this::fazerEmprestimoButtonActionPerformed);
+        searchEmprestimo.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                DefaultTableModel obj = (DefaultTableModel) tableEmprestimos.getModel();
+                TableRowSorter<DefaultTableModel> obj1 = new TableRowSorter<>(obj);
+                tableEmprestimos.setRowSorter(obj1);
+                obj1.setRowFilter(RowFilter.regexFilter(searchEmprestimo.getText()));            }
+        });
     }
 
     private void confirmarButtonButtonActionPerformed(ActionEvent actionEvent){
@@ -103,5 +115,12 @@ public class MenuFazerDevolucao extends JFrame{
         dispose();
         MenuGestaoEmprestimo menuGestaoEmprestimos = new MenuGestaoEmprestimo("Menu Gestão de Emprestimos");
         menuGestaoEmprestimos.setVisible(true);
+    }
+
+    private void fazerEmprestimoButtonActionPerformed(ActionEvent actionEvent){
+        setVisible(false);
+        dispose();
+        MenuFazerEmprestimo menuFazerEmprestimo = new MenuFazerEmprestimo("Menu Fazer Emprestimo");
+        menuFazerEmprestimo.setVisible(true);
     }
 }

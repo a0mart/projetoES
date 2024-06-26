@@ -1,7 +1,10 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MenuPaginaInicialSocio extends JFrame{
     private JButton editoraButton;
@@ -9,10 +12,10 @@ public class MenuPaginaInicialSocio extends JFrame{
     private JButton subGeneroButton;
     private JButton generoButton;
     private JButton autorButton;
-    private JTextField textField1;
     private JTable tabelaStocks;
     private JPanel menuPaginaInicialSocio;
     private JButton verDetalhesButton;
+    private JTextField searchLirvo;
 
     private GestorBaseDados gestorBaseDados;
 
@@ -23,6 +26,8 @@ public class MenuPaginaInicialSocio extends JFrame{
         gestorBaseDados = GestorBaseDados.getGestorBaseDados();
         gestorBaseDados.criarStockeLivros("Cinderela", "Joaquim", Genero.tecnico, SubGenero.informatica, 213, 345, 1222,7);
         gestorBaseDados.criarStockeLivros("Shrek", "JJ", Genero.ficcao, SubGenero.romance, 213, 345, 1222,7);
+
+        setContentPane(menuPaginaInicialSocio);
 
 
         String[][] dataLivros = new String[gestorBaseDados.getStocks().size()][8];
@@ -37,22 +42,27 @@ public class MenuPaginaInicialSocio extends JFrame{
             int id = gestorBaseDados.getStocks().get(i).getId();
 
 
-            dataLivros[i] = new String[]{titulo, autor, String.valueOf(genero), String.valueOf(subGenero), String.valueOf(numeroEdicao), String.valueOf(isbn), String.valueOf(ano), String.valueOf(id)};
+            dataLivros[i] = new String[]{String.valueOf(id), titulo, autor, String.valueOf(genero), String.valueOf(subGenero), String.valueOf(numeroEdicao), String.valueOf(isbn), String.valueOf(ano)};
         }
         tabelaStocks.setModel(new DefaultTableModel(
                 dataLivros,
-                new String[]{ "Titulo", "Autor", "Genero", "SubGenero", "Numero de Edicao", "ISBN", "Ano", "ID"}
+                new String[]{"ID", "Titulo", "Autor", "Genero", "SubGenero", "Numero de Edicao", "ISBN", "Ano"}
         ));
 
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setContentPane(menuPaginaInicialSocio);
-
-        setLocationRelativeTo(null);
-        setMinimumSize(new Dimension(600, 400));
         pack();
 
         verDetalhesButton.addActionListener(this::verDetalhesButtonActionPerformed);
+        searchLirvo.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                DefaultTableModel obj = (DefaultTableModel) tabelaStocks.getModel();
+                TableRowSorter<DefaultTableModel> obj1 = new TableRowSorter<>(obj);
+                tabelaStocks.setRowSorter(obj1);
+                obj1.setRowFilter(RowFilter.regexFilter(searchLirvo.getText()));
+            }
+        });
     }
 
     private void verDetalhesButtonActionPerformed(ActionEvent actionEvent){
@@ -71,7 +81,7 @@ public class MenuPaginaInicialSocio extends JFrame{
         for (int i = 0; i < 8; i++) {
             data[i] = tabelaStocks.getModel().getValueAt(row, i).toString();
         }
-        return Integer.parseInt(data[7]);
+        return Integer.parseInt(data[0]);
     }
 
     public void errorInvalidTableIndex() {

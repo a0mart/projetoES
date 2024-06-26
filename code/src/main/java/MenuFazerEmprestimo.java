@@ -1,7 +1,9 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MenuFazerEmprestimo extends JFrame{
     private JPanel menuFazerEmprestimo;
@@ -9,7 +11,6 @@ public class MenuFazerEmprestimo extends JFrame{
     private JButton gestaoDeSociosButton;
     private JButton gestaoDeMultasButton;
     private JButton fazerDevolucaoButton;
-    private JButton fazerEmprestimoButton;
     private JButton gestaoDeLivrosButton;
     private JButton gestaoDeRequisitosButton;
     private JButton gestaoDeEmprestimosButton;
@@ -17,16 +18,18 @@ public class MenuFazerEmprestimo extends JFrame{
     private JTable tabelaLivros;
     private JButton confirmarButton;
     private JButton adicionarSocioButton;
+    private JButton fazerEmprestimoButton1;
+    private JTextField searchSocio;
+    private JTextField searchLivro;
+    private JTextField textField1;
 
     private GestorBaseDados gestorBaseDados;
 
 
     public MenuFazerEmprestimo(String title){
         super(title);
-
-        setContentPane(menuFazerEmprestimo);
-
         gestorBaseDados = GestorBaseDados.getGestorBaseDados();
+        setContentPane(menuFazerEmprestimo);
 
         String[][] dataSocios = new String[gestorBaseDados.getSocios().size()][5];
         for (int i = 0; i < gestorBaseDados.getSocios().size(); i++){
@@ -57,24 +60,49 @@ public class MenuFazerEmprestimo extends JFrame{
                 int numeroEdicao = gestorBaseDados.getLivros().get(i).getNumeroEdicao();
                 int isbn = gestorBaseDados.getLivros().get(i).getIsbn();
                 int ano = gestorBaseDados.getLivros().get(i).getAno();
+                int codigo = gestorBaseDados.getLivros().get(i).getCodigo();
 
-                dataLivros[i] = new String[]{titulo, autor, String.valueOf(genero), String.valueOf(subGenero), String.valueOf(numeroEdicao), String.valueOf(isbn), String.valueOf(ano), String.valueOf(id)};
+                dataLivros[i] = new String[]{String.valueOf(id), titulo, autor, String.valueOf(genero), String.valueOf(subGenero), String.valueOf(numeroEdicao), String.valueOf(isbn), String.valueOf(ano), String.valueOf(codigo)};
             }
         }
         tabelaLivros.setModel(new DefaultTableModel(
                 dataLivros,
-                new String[]{"Titulo", "Autor", "Genero", "Sub Genero", "NºEdicao", "ISBN", "Ano", "ID"}
+                new String[]{"ID", "Titulo", "Autor", "Genero", "Sub Genero", "NºEdicao", "ISBN", "Ano", "Código"}
         ));
 
-        setMinimumSize(new Dimension(900, 600));
+
+
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
 
         confirmarButton.addActionListener(this::confirmarButtonActionPerformed);
         paginaInicialButton.addActionListener(this::paginaIncialButtonButtonActionPerformed);
+        gestaoDeLivrosButton.addActionListener(this::gestaoDeLivrosButtonActionPerformed);
+        gestaoDeEmprestimosButton.addActionListener(this::gestaoDeEmprestimosButtonActionPerformed);
+        fazerDevolucaoButton.addActionListener(this::fazerDevolucaoButtonActionPerformed);
+
+        searchLivro.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                DefaultTableModel obj = (DefaultTableModel) tabelaLivros.getModel();
+                TableRowSorter<DefaultTableModel> obj1 = new TableRowSorter<>(obj);
+                tabelaLivros.setRowSorter(obj1);
+                obj1.setRowFilter(RowFilter.regexFilter(searchLivro.getText()));
+            }
+        });
+        searchSocio.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                DefaultTableModel obj = (DefaultTableModel) tabelaSocios.getModel();
+                TableRowSorter<DefaultTableModel> obj1 = new TableRowSorter<>(obj);
+                tabelaSocios.setRowSorter(obj1);
+                obj1.setRowFilter(RowFilter.regexFilter(searchSocio.getText()));
+            }
+        });
     }
 
     private void confirmarButtonActionPerformed(ActionEvent actionEvent){
-        if (tabelaLivros.getSelectedRow() == -1 && tabelaSocios.getSelectedRow() == -1) {
+        if (tabelaLivros.getSelectedRow() == -1 || tabelaSocios.getSelectedRow() == -1) {
             errorInvalidTableIndex();
         }
         int livro = getLivroSelecionado();
@@ -94,18 +122,16 @@ public class MenuFazerEmprestimo extends JFrame{
 
 
         close();
-        gestaoDeLivrosButton.addActionListener(this::gestaoDeLivrosButtonActionPerformed);
-        gestaoDeEmprestimosButton.addActionListener(this::gestaoDeEmprestimosButtonActionPerformed);
     }
 
     public int getLivroSelecionado() {
         int row = tabelaLivros.getSelectedRow();
-        String[] data = new String[8];
+        String[] data = new String[9];
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             data[i] = tabelaLivros.getModel().getValueAt(row, i).toString();
         }
-        return Integer.parseInt(data[7]);
+        return Integer.parseInt(data[0]);
     }
     public int getSocioSelecionado() {
         int row = tabelaSocios.getSelectedRow();
@@ -120,7 +146,6 @@ public class MenuFazerEmprestimo extends JFrame{
     public void errorInvalidTableIndex() {
         JOptionPane.showMessageDialog(null, "Tem de selecionar uma opcao em cada tabela!");
     }
-
     public void close() {
         setVisible(false);
         dispose();
@@ -147,6 +172,13 @@ public class MenuFazerEmprestimo extends JFrame{
         dispose();
         MenuGestaoEmprestimo menuGestaoEmprestimos = new MenuGestaoEmprestimo("Menu Gestão de Emprestimos");
         menuGestaoEmprestimos.setVisible(true);
+    }
+
+    private void fazerDevolucaoButtonActionPerformed(ActionEvent actionEvent){
+        setVisible(false);
+        dispose();
+        MenuFazerDevolucao menuFazerDevolucao = new MenuFazerDevolucao("Menu Fazer Devolucao");
+        menuFazerDevolucao.setVisible(true);
     }
 
 }

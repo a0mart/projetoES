@@ -18,6 +18,7 @@ public class SubMenuAtualizarLivro extends JFrame{
 
         gestorBaseDados = GestorBaseDados.getGestorBaseDados();
 
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
 
         confirmarButton.addActionListener(this::confirmarButtonActionPerformed);
@@ -29,6 +30,7 @@ public class SubMenuAtualizarLivro extends JFrame{
         }else{
             gestorBaseDados.getLivros().get(idLivro).setEstadoLivro(EstadoLivro.Indisponivel);
         }
+        JOptionPane.showMessageDialog(null, "Estado do livro alterado.");
         setVisible(false);
         dispose();
         MenuAtualizarLivro menuAtualizarLivro = new MenuAtualizarLivro("Menu Atualizar livro");
