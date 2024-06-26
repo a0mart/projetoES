@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 public class MenuGestaoFornecedores extends JFrame{
     private JPanel menuGestaoFornecedores;
@@ -26,7 +28,7 @@ public class MenuGestaoFornecedores extends JFrame{
         this.botoes = new BotaoFornecedor[3][3];
         painelLivros.setLayout(new GridLayout(3, 3));
 
-        //adicionar a tabela 3 por 3 de Fornecedores á pagina
+        //adicionar a tabela 3 por 3 de Fornecedores á
         int id = -1;
         int new_id = -2;
         Iterator<Fornecedor> fornecedorIterator = gestorBaseDados.getFornecedores().iterator();
@@ -34,7 +36,6 @@ public class MenuGestaoFornecedores extends JFrame{
             for (int coluna = 0; coluna < 3; ++coluna) {
                 botoes[linha][coluna] = new BotaoFornecedor(linha, coluna);
 
-                // Ensure there are still books available in the iterator
                 if (fornecedorIterator.hasNext()) {
                     Fornecedor f = fornecedorIterator.next();
                     new_id = f.getId();
@@ -50,6 +51,7 @@ public class MenuGestaoFornecedores extends JFrame{
                 painelLivros.add(botoes[linha][coluna]);
             }
         }
+
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(menuGestaoFornecedores);
         setMinimumSize(new Dimension(900, 600));
@@ -90,11 +92,10 @@ public class MenuGestaoFornecedores extends JFrame{
         BotaoFornecedor botao = (BotaoFornecedor) e.getSource();
         int id = -1;
         for (Fornecedor s:gestorBaseDados.getFornecedores()) {
-            if (s.nif == botao.getFornecedor().nif){
-                id = s.getId();
+            if (s.getNome() == botao.getFornecedor().getNome()){
+                MenuDetalhesFornecedor menuDetalhesFornecedor = new MenuDetalhesFornecedor("Menu Destalhes do fornecedor",s);
+                menuDetalhesFornecedor.setVisible(true);
             }
         }
-        MenuDetalhesFornecedor menuDetalhesFornecedor = new MenuDetalhesFornecedor("Menu Destalhes do fornecedor",id-1);
-        menuDetalhesFornecedor.setVisible(true);
     }
 }

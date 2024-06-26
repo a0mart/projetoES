@@ -24,12 +24,11 @@ public class MenuDetalhesFornecedor extends JFrame{
     private JButton verButton;
     private JLabel moradaLabel;
     private List<Livro> catalogo;
+    private Fornecedor f;
 
-    public MenuDetalhesFornecedor(String title,int id) throws HeadlessException {
+    public MenuDetalhesFornecedor(String title,Fornecedor f) throws HeadlessException {
         super(title);
-
-        Fornecedor f = getDetalhesFornecedor(id);
-
+        this.f = f;
         this.catalogo = f.getLivrosDisponiveis();
         namelabel.setText(f.getNome());
         nifName.setText(String.valueOf(f.getNif()));
@@ -53,18 +52,14 @@ public class MenuDetalhesFornecedor extends JFrame{
         editarButton.addActionListener(this::btneditarActionPerformed);
     }
 
-    public Fornecedor getDetalhesFornecedor(int id){
-        GestorBaseDados gBDados = GestorBaseDados.getGestorBaseDados();
-        return gBDados.getFornecedores().get(id);
-    }
-
     public void btnverActionPerformed(ActionEvent e) {
         MenuCatalogoFornecedor menuCatalogoFornecedor = new MenuCatalogoFornecedor("Menu Ver Catalogo",catalogo);
         menuCatalogoFornecedor.setVisible(true);
     }
 
     public void btneditarActionPerformed(ActionEvent e) {
-        MenuEditarFornecedor menuEditarFornecedor = new MenuEditarFornecedor("Menu Editar Fornecedor");
+        dispose();
+        MenuEditarFornecedor menuEditarFornecedor = new MenuEditarFornecedor("Menu Editar Fornecedor",f);
         menuEditarFornecedor.setVisible(true);
     }
 

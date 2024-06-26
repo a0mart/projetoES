@@ -16,6 +16,14 @@ public class Fornecedor extends Contacto{
         this.livrosDisponiveis = new ArrayList<>();
     }
 
+    public void setEstadoContaFornecedor(EstadoContaFornecedor estadoContaFornecedor) {
+        this.estadoContaFornecedor = estadoContaFornecedor;
+    }
+
+    public void setTipoFornecedor(TipoFornecedor tipoFornecedor) {
+        this.tipoFornecedor = tipoFornecedor;
+    }
+
     public int getId() {
         return id;
     }

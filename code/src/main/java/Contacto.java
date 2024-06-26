@@ -13,6 +13,26 @@ public abstract class Contacto {
         this.email = email;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setNif(int nif) {
+        this.nif = nif;
+    }
+
+    public void setMorada(String morada) {
+        this.morada = morada;
+    }
+
+    public void setTelefone(int telefone) {
+        this.telefone = telefone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getNome() {
         return nome;
     }
