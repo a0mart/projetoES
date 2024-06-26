@@ -15,4 +15,8 @@ public class Funcionario extends Contacto{
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public int getId() {
+        return id;
+    }
 }

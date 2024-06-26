@@ -21,7 +21,7 @@ public class TesteProjetoFlavio {
     @Test
     public void testEmprestimo(){
         Livro livro = new Livro("EI", "Manel", Genero.tecnico, SubGenero.informatica, 1, 123, 2024);
-        Socio socio = new Socio("Maria", 123456789, "Casa", 987654321, "mail@");
+        Socio socio = new Socio("Maria", 123456789, "Casa", 987654321, "mail@","pass");
 
         Emprestimo emprestimo = new Emprestimo(livro, socio);
 
@@ -64,7 +64,7 @@ public class TesteProjetoFlavio {
         LocalDate dataEmprestimo = LocalDate.now();
 
         Livro livro = new Livro("EI", "Manel", Genero.tecnico, SubGenero.informatica, 1, 123, 2024);
-        Socio socio = new Socio("Maria", 123456789, "Casa", 987654321, "mail@");
+        Socio socio = new Socio("Maria", 123456789, "Casa", 987654321, "mail@","pass");
 
         Emprestimo emprestimo = new Emprestimo(livro, socio);
 
