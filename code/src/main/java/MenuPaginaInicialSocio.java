@@ -24,8 +24,6 @@ public class MenuPaginaInicialSocio extends JFrame{
         super(title);
 
         gestorBaseDados = GestorBaseDados.getGestorBaseDados();
-        gestorBaseDados.criarStockeLivros("Cinderela", "Joaquim", Genero.tecnico, SubGenero.informatica, 213, 345, 1222,7);
-        gestorBaseDados.criarStockeLivros("Shrek", "JJ", Genero.ficcao, SubGenero.romance, 213, 345, 1222,7);
 
         setContentPane(menuPaginaInicialSocio);
 
@@ -92,11 +90,7 @@ public class MenuPaginaInicialSocio extends JFrame{
         setVisible(false);
         dispose();
 
-        MenuDetalhesLivro menuDetalhesLivro = new MenuDetalhesLivro("Menu Detalhes do Livro", stock-1);
+        MenuDetalhesLivro menuDetalhesLivro = new MenuDetalhesLivro("Menu Detalhes do Livro", stock-1, 2);
         menuDetalhesLivro.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        new MenuPaginaInicialSocio("Menu Principal").setVisible(true);
     }
 }

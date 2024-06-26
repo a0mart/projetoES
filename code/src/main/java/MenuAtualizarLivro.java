@@ -1,6 +1,9 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MenuAtualizarLivro extends JFrame{
     private JButton gestaoDeSociosButton;
@@ -9,10 +12,11 @@ public class MenuAtualizarLivro extends JFrame{
     private JButton gestaoDeLivrosButton;
     private JButton gestaoDeRequisitosButton;
     private JButton paginaInicialButton;
-    private JTable table1;
+    private JTable tabelaLivros;
     private JPanel menuAtualizarLivro;
     private JButton atualizarButton;
     private JButton atualizarLivroButton1;
+    private JTextField searchLivro;
 
     private GestorBaseDados gestorBaseDados;
 
@@ -36,12 +40,12 @@ public class MenuAtualizarLivro extends JFrame{
             int ano = gestorBaseDados.getLivros().get(i).getAno();
             EstadoLivro estadoLivro = gestorBaseDados.getLivros().get(i).getEstadoLivro();
 
-            dataLivros[i] = new String[]{titulo, autor, String.valueOf(genero), String.valueOf(subGenero), String.valueOf(numeroEdicao), String.valueOf(isbn), String.valueOf(ano), String.valueOf(id), String.valueOf(estadoLivro)};
+            dataLivros[i] = new String[]{String.valueOf(id), titulo, autor, String.valueOf(genero), String.valueOf(subGenero), String.valueOf(numeroEdicao), String.valueOf(isbn), String.valueOf(ano), String.valueOf(estadoLivro)};
 
         }
-        table1.setModel(new DefaultTableModel(
+        tabelaLivros.setModel(new DefaultTableModel(
                 dataLivros,
-                new String[]{"Titulo", "Autor", "Genero", "Sub Genero", "NºEdicao", "ISBN", "Ano", "ID", "Estado"}
+                new String[]{"ID", "Titulo", "Autor", "Genero", "Sub Genero", "NºEdicao", "ISBN", "Ano", "Estado"}
         ));
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -51,10 +55,19 @@ public class MenuAtualizarLivro extends JFrame{
         paginaInicialButton.addActionListener(this::paginaIncialButtonButtonActionPerformed);
         gestaoDeLivrosButton.addActionListener(this::gestaoDeLivrosButtonActionPerformed);
         gestaoDeEmprestimosButton.addActionListener(this::gestaoDeEmprestimosButtonActionPerformed);
+        searchLivro.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                DefaultTableModel obj = (DefaultTableModel) tabelaLivros.getModel();
+                TableRowSorter<DefaultTableModel> obj1 = new TableRowSorter<>(obj);
+                tabelaLivros.setRowSorter(obj1);
+                obj1.setRowFilter(RowFilter.regexFilter(searchLivro.getText()));
+            }
+        });
     }
 
     public void atualizarButtonActionPerformed(ActionEvent e){
-        if (table1.getSelectedRow() == -1){
+        if (tabelaLivros.getSelectedRow() == -1){
             JOptionPane.showMessageDialog(null, "Tem de selecionar uma opcao da tabela!");
         }
         int id = getLivroSelecionado();
@@ -62,13 +75,13 @@ public class MenuAtualizarLivro extends JFrame{
         close(id);
     }
     public int getLivroSelecionado() {
-        int row = table1.getSelectedRow();
+        int row = tabelaLivros.getSelectedRow();
         String[] data = new String[9];
 
         for (int i = 0; i < 9; i++) {
-            data[i] = table1.getModel().getValueAt(row, i).toString();
+            data[i] = tabelaLivros.getModel().getValueAt(row, i).toString();
         }
-        return Integer.parseInt(data[7]);
+        return Integer.parseInt(data[0]);
     }
 
     public void close(int stock) {

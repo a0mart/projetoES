@@ -4,6 +4,7 @@ import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Iterator;
 
 public class MenuFazerEmprestimo extends JFrame{
     private JPanel menuFazerEmprestimo;
@@ -30,6 +31,9 @@ public class MenuFazerEmprestimo extends JFrame{
         super(title);
         gestorBaseDados = GestorBaseDados.getGestorBaseDados();
         setContentPane(menuFazerEmprestimo);
+
+        Iterator<Socio> socioIterator = gestorBaseDados.getSocios().iterator();
+
 
         String[][] dataSocios = new String[gestorBaseDados.getSocios().size()][5];
         for (int i = 0; i < gestorBaseDados.getSocios().size(); i++){

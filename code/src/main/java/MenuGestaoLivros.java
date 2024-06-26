@@ -89,7 +89,7 @@ public class MenuGestaoLivros extends JFrame{
                 id = s.getId();
             }
         }
-        MenuDetalhesLivro menuDetalhesLivro = new MenuDetalhesLivro("Menu Destalhes do livro",id-1);
+        MenuDetalhesLivro menuDetalhesLivro = new MenuDetalhesLivro("Menu Destalhes do livro",id-1, 1);
         menuDetalhesLivro.setVisible(true);
     }
 

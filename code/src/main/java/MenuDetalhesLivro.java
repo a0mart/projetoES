@@ -24,14 +24,17 @@ public class MenuDetalhesLivro extends JFrame{
 
     private GestorBaseDados gestorBaseDados;
 
+    private int menuPrincipal;
+
     private int stock;
 
 
-    public MenuDetalhesLivro(String titulo, int stock){
+    public MenuDetalhesLivro(String titulo, int stock, int menuPrincipal){
         super(titulo);
 
         gestorBaseDados = GestorBaseDados.getGestorBaseDados();
         this.stock = stock;
+        this.menuPrincipal= menuPrincipal;
 
         setContentPane(menuDetalhesLivro);
 
@@ -55,7 +58,13 @@ public class MenuDetalhesLivro extends JFrame{
     public void paginaIncialButtonButtonActionPerformed(ActionEvent e){
         setVisible(false);
         dispose();
-        MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");
-        menuPrincipal.setVisible(true);
+        if (menuPrincipal == 1){
+            MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");
+            menuPrincipal.setVisible(true);
+        }else {
+            MenuPaginaInicialSocio menuPaginaInicialSocio = new MenuPaginaInicialSocio("Menu Principal");
+            menuPaginaInicialSocio.setVisible(true);
+        }
+
     }
 }
