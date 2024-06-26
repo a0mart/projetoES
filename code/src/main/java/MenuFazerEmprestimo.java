@@ -66,13 +66,11 @@ public class MenuFazerEmprestimo extends JFrame{
                 new String[]{"Titulo", "Autor", "Genero", "Sub Genero", "NºEdicao", "ISBN", "Ano", "ID"}
         ));
 
-
-
-        setLocationRelativeTo(null);
         setMinimumSize(new Dimension(900, 600));
         pack();
 
         confirmarButton.addActionListener(this::confirmarButtonActionPerformed);
+        paginaInicialButton.addActionListener(this::paginaIncialButtonButtonActionPerformed);
     }
 
     private void confirmarButtonActionPerformed(ActionEvent actionEvent){
@@ -96,6 +94,8 @@ public class MenuFazerEmprestimo extends JFrame{
 
 
         close();
+        gestaoDeLivrosButton.addActionListener(this::gestaoDeLivrosButtonActionPerformed);
+        gestaoDeEmprestimosButton.addActionListener(this::gestaoDeEmprestimosButtonActionPerformed);
     }
 
     public int getLivroSelecionado() {
@@ -127,6 +127,26 @@ public class MenuFazerEmprestimo extends JFrame{
 
         MenuGestaoEmprestimo menuGestaoEmprestimo = new MenuGestaoEmprestimo("Menu Gestao de Emprestimos");
         menuGestaoEmprestimo.setVisible(true);
+    }
+
+    public void paginaIncialButtonButtonActionPerformed(ActionEvent e){
+        setVisible(false);
+        dispose();
+        MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");
+        menuPrincipal.setVisible(true);
+    }
+
+    private void gestaoDeLivrosButtonActionPerformed(ActionEvent actionEvent){
+        dispose();
+        MenuGestaoLivros menuGestaoLivros = new MenuGestaoLivros("Menu Gestão de Livros");
+        menuGestaoLivros.setVisible(true);
+    }
+
+    private void gestaoDeEmprestimosButtonActionPerformed(ActionEvent actionEvent){
+        setVisible(false);
+        dispose();
+        MenuGestaoEmprestimo menuGestaoEmprestimos = new MenuGestaoEmprestimo("Menu Gestão de Emprestimos");
+        menuGestaoEmprestimos.setVisible(true);
     }
 
 }

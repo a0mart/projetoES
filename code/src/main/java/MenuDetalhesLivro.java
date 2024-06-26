@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class MenuDetalhesLivro extends JFrame{
     private JPanel menuDetalhesLivro;
@@ -41,12 +42,21 @@ public class MenuDetalhesLivro extends JFrame{
         labelSubGenero.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getSubGenero()));
         //labelEditora.setText(stock.getEditora);
         labelEdicao.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getNumeroEdicao()));
-        labelEdicao.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getAno()));
+        labelano.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getAno()));
         labelISBN.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getIsbn()));
         labelStock.setText(String.valueOf(gestorBaseDados.getStocks().get(stock).getQuantidadeLivrosDisponivel()));
 
         setMinimumSize(new Dimension(900, 600));
         pack();
 
+        paginaInicialButton.addActionListener(this::paginaIncialButtonButtonActionPerformed);
+
+    }
+
+    public void paginaIncialButtonButtonActionPerformed(ActionEvent e){
+        setVisible(false);
+        dispose();
+        MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");
+        menuPrincipal.setVisible(true);
     }
 }

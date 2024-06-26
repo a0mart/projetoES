@@ -3,7 +3,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
-import java.util.Date;
 
 
 public class MenuFazerDevolucao extends JFrame{
@@ -46,12 +45,13 @@ public class MenuFazerDevolucao extends JFrame{
                 new String[]{ "ID", "Titulo", "Nome", "Data de Emprestimo", "Data de Entrega"}
         ));
 
-
-        setLocationRelativeTo(null);
         setMinimumSize(new Dimension(900, 600));
         pack();
 
         confirmarButton.addActionListener(this::confirmarButtonButtonActionPerformed);
+        paginaInicialButton.addActionListener(this::paginaIncialButtonButtonActionPerformed);
+        gestaoDeLivrosButton.addActionListener(this::gestaoDeLivrosButtonActionPerformed);
+        gestaoDeEmprestimosButton.addActionListener(this::gestaoDeEmprestimosButtonActionPerformed);
     }
 
     private void confirmarButtonButtonActionPerformed(ActionEvent actionEvent){
@@ -68,7 +68,7 @@ public class MenuFazerDevolucao extends JFrame{
                 gestorBaseDados.getEmprestimos().get(i).getLivroEmprestado().setEstadoLivro(EstadoLivro.Devolvido);
             }
         }
-
+        JOptionPane.showMessageDialog(null, "Emprestimo Fechado com sucesso!");
         setVisible(false);
         dispose();
         MenuGestaoEmprestimo menuGestaoEmprestimo = new MenuGestaoEmprestimo("Menu Gestao Emprestimos");
@@ -83,5 +83,25 @@ public class MenuFazerDevolucao extends JFrame{
             data[i] = tableEmprestimos.getModel().getValueAt(row, i).toString();
         }
         return Integer.parseInt(data[0]);
+    }
+
+    public void paginaIncialButtonButtonActionPerformed(ActionEvent e){
+        setVisible(false);
+        dispose();
+        MenuPrincipal menuPrincipal = new MenuPrincipal("Menu Principal");
+        menuPrincipal.setVisible(true);
+    }
+
+    private void gestaoDeLivrosButtonActionPerformed(ActionEvent actionEvent){
+        dispose();
+        MenuGestaoLivros menuGestaoLivros = new MenuGestaoLivros("Menu Gestão de Livros");
+        menuGestaoLivros.setVisible(true);
+    }
+
+    private void gestaoDeEmprestimosButtonActionPerformed(ActionEvent actionEvent){
+        setVisible(false);
+        dispose();
+        MenuGestaoEmprestimo menuGestaoEmprestimos = new MenuGestaoEmprestimo("Menu Gestão de Emprestimos");
+        menuGestaoEmprestimos.setVisible(true);
     }
 }
